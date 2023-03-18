@@ -20,4 +20,6 @@ public class Employee extends AuditableEntity implements Serializable {
 
     private String address;
 
+    private String contactNumber;
+
 }
