@@ -22,4 +22,6 @@ public class Employee extends AuditableEntity implements Serializable {
 
     private String contactNumber;
 
+    private float leave_balance;
+
 }
