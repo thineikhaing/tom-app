@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Main-Class: com.nus.tom.TomApplication
+Class-Path: log4j-api-2.19.0.jar spring-context-support-6.0.6.jar jackso
+ n-module-parameter-names-2.14.2.jar spring-jcl-6.0.6.jar spring-data-co
+ mmons-3.0.3.jar hibernate-validator-8.0.0.Final.jar spring-boot-starter
+ -json-3.0.4.jar jackson-annotations-2.14.2.jar aspectjweaver-1.9.19.jar
+  jakarta.activation-api-2.1.1.jar freemarker-2.3.32.jar postgresql-42.5
+ .4.jar spring-tx-6.0.6.jar spring-boot-autoconfigure-3.0.4.jar tomcat-e
+ mbed-core-10.1.5.jar spring-boot-starter-logging-3.0.4.jar spring-secur
+ ity-web-6.0.2.jar jul-to-slf4j-2.0.6.jar hibernate-core-6.1.7.Final.jar
+  micrometer-observation-1.10.4.jar jackson-databind-2.14.2.jar jakarta.
+ inject-api-2.0.0.jar angus-activation-2.0.0.jar istack-commons-runtime-
+ 4.1.1.jar spring-expression-6.0.6.jar spring-data-jpa-3.0.3.jar spring-
+ orm-6.0.6.jar jboss-logging-3.5.0.Final.jar spring-boot-starter-3.0.4.j
+ ar jaxb-api-2.3.0.jar micrometer-commons-1.10.4.jar spring-boot-starter
+ -aop-3.0.4.jar spring-context-6.0.6.jar jakarta.validation-api-3.0.2.ja
+ r spring-security-crypto-6.0.2.jar jakarta.annotation-api-2.1.1.jar hib
+ ernate-commons-annotations-6.0.6.Final.jar spring-boot-starter-data-jpa
+ -3.0.4.jar antlr4-runtime-4.10.1.jar spring-boot-3.0.4.jar spring-boot-
+ starter-tomcat-3.0.4.jar spring-jdbc-6.0.6.jar spring-boot-starter-web-
+ 3.0.4.jar byte-buddy-1.12.23.jar txw2-4.0.2.jar jakarta.persistence-api
+ -3.1.0.jar jaxb-runtime-4.0.2.jar log4j-to-slf4j-2.19.0.jar logback-cla
+ ssic-1.4.5.jar spring-boot-starter-validation-3.0.4.jar spring-web-6.0.
+ 6.jar spring-security-config-6.0.2.jar spring-security-core-6.0.2.jar j
+ jwt-0.9.1.jar jandex-2.4.2.Final.jar logback-core-1.4.5.jar checker-qua
+ l-3.5.0.jar jackson-datatype-jdk8-2.14.2.jar jakarta.transaction-api-2.
+ 0.1.jar snakeyaml-1.33.jar spring-beans-6.0.6.jar spring-boot-starter-s
+ ecurity-3.0.4.jar spring-aop-6.0.6.jar spring-boot-starter-jdbc-3.0.4.j
+ ar spring-webmvc-6.0.6.jar spring-aspects-6.0.6.jar HikariCP-5.0.1.jar 
+ jakarta.xml.bind-api-4.0.0.jar spring-core-6.0.6.jar jaxb-core-4.0.2.ja
+ r tomcat-embed-websocket-10.1.5.jar jackson-core-2.14.2.jar slf4j-api-2
+ .0.6.jar lombok-1.18.26.jar jackson-datatype-jsr310-2.14.2.jar spring-b
+ oot-starter-freemarker-3.0.4.jar tomcat-embed-el-10.1.5.jar classmate-1
+ .5.1.jar
+

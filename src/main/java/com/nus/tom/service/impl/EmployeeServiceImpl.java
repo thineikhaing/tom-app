@@ -25,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ResponseEntity<ResponseValueObject> save(Employee employee) {
         try {
-            log.info("Save employee {}", employee.getName());
+            log.info("Save employee {}", employee.getFullName());
             employeeRepository.save(employee);
             return responseHelper.setResponseEntity(TOMConstants.SUCCESS, TOMConstants.EMPTY_STRING, employee.getId());
         } catch (Exception ex) {
