@@ -1,24 +1,27 @@
 package com.nus.tom.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
+import java.util.UUID;
 
-
-@Entity
-@Table(name = "Employee")
-@Data
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+@Entity
+@Table(name = "employee")
 public class Employee extends AuditableEntity implements Serializable {
 
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     private String id;
 
     @ManyToOne
@@ -45,5 +48,12 @@ public class Employee extends AuditableEntity implements Serializable {
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date employment_endDate;
+
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
+
+    @OneToMany(mappedBy = "employee")
+    private Set<Leave> leaves;
 
 }

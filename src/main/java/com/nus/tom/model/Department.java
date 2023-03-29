@@ -1,17 +1,17 @@
 package com.nus.tom.model;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.FetchMode;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
+@Builder
+@Data
+
 @Entity
 @Table(name = "department")
 public class Department extends AuditableEntity implements Serializable {
@@ -28,7 +28,7 @@ public class Department extends AuditableEntity implements Serializable {
     private Employee departmentHead;
 
     @OneToMany(mappedBy = "department", fetch= FetchType.EAGER)
-    private List<Employee> employees;
+    private Set<Employee> employees;
 
     private String details;
 

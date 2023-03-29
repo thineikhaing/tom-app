@@ -1,7 +1,9 @@
 package com.nus.tom.service.impl;
 
+import com.nus.tom.model.Department;
 import com.nus.tom.model.Employee;
 import com.nus.tom.model.ResponseValueObject;
+import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.service.EmployeeService;
 import com.nus.tom.util.ResponseHelper;
@@ -10,9 +12,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -20,6 +25,8 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+
+    private final DepartmentRepository departmentRepository;
     private final ResponseHelper responseHelper;
 
     @Override
