@@ -1,9 +1,8 @@
 package com.nus.tom.repository;
 
 import com.nus.tom.model.Employee;
+import com.nus.tom.model.Leave;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.UUID;
-
-public interface EmployeeRepository extends JpaRepository<Employee, String> {
+public interface LeaveRepository extends JpaRepository<Leave, String> {
 }

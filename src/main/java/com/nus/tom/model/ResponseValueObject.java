@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.UUID;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Builder
 public class ResponseValueObject implements Serializable {
 
-   private long id;
+   private String id;
    private String message;
    private ErrorObject errors;
 }

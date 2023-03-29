@@ -1,32 +1,45 @@
 package com.nus.tom.model;
 
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.Persistable;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.Objects;
 
 @MappedSuperclass
-@Data
 public class AuditableEntity {
 
 
-    @CreatedBy
-    private String createdBy;
-    @CreatedDate
+    @Column(updatable = false,name = "createdBy")
+    private String createdBy="System";
+    @Column(updatable = false,name = "createdOn")
     private Instant createdOn;
-    @LastModifiedBy
-    private String modifiedBy;
-    @LastModifiedDate
+    @Column(name = "modifiedBy")
+    private String modifiedBy="System";
+    @Column(name = "modifiedOn")
     private Instant modifiedOn;
+
+    @PrePersist
+    public void setCreatedOn() {
+        if (this.createdOn == null) {
+            this.createdOn = Instant.now();
+        }
+        if (this.modifiedOn == null) {
+            this.modifiedOn = Instant.now();
+        }
+    }
+
+    @PreUpdate
+    public void setModifiedOn() {
+        if (this.modifiedOn == null) {
+            this.modifiedOn = Instant.now();
+        }
+    }
 
 }
