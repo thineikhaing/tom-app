@@ -1,9 +1,7 @@
 package com.nus.tom.controller;
 
-import com.nus.tom.model.Employee;
 import com.nus.tom.model.Leave;
 import com.nus.tom.model.ResponseValueObject;
-import com.nus.tom.service.EmployeeService;
 import com.nus.tom.service.LeaveService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +18,7 @@ public class LeaveController {
     private final LeaveService leaveService;
 
 
-    @PostMapping(path = "/saveEmployee", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/applyLeave", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseValueObject> save(@RequestBody Leave leave) {
         return leaveService.save(leave);
     }
