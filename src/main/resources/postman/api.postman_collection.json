@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "8ecef056-e322-4589-8f64-86f91c52c7d7",
+		"name": "api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26557714"
+	},
+	"item": [
+		{
+			"name": "Save Employee",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJteWEiLCJpYXQiOjE2ODAwNzYzMDYsImV4cCI6MTY4MDE2MjcwNn0.SqhqB4G5wjsgXHr7YEow3lWIwVcMQ7gQASQlRaJEU-Nmo3eVyY7DtXdKJtzoDzbAYT_TKctwnOZrk9yYA5c4Dw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"1\",\r\n    \"fullName\": \"Mya Pwint Cho\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/tom/employee/saveEmployee",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tom",
+						"employee",
+						"saveEmployee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Apply Leave",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJteWEiLCJpYXQiOjE2ODAwNzYzMDYsImV4cCI6MTY4MDE2MjcwNn0.SqhqB4G5wjsgXHr7YEow3lWIwVcMQ7gQASQlRaJEU-Nmo3eVyY7DtXdKJtzoDzbAYT_TKctwnOZrk9yYA5c4Dw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"leaveType\": \"Annual Leave\",\r\n    \"employee\": {\r\n        \"id\": \"bf9286bf-cc80-4aae-814c-4d35ed44f573\"\r\n    },\r\n    \"startDate\": \"2023-04-01T00:00:00.00Z\",\r\n    \"endDate\": \"2023-04-03T12:00:00.00Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/tom/leave/applyLeave",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tom",
+						"leave",
+						"applyLeave"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
