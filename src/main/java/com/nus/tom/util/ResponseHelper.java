@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.UUID;
+
 @Component
 public class ResponseHelper {
-    public ResponseEntity<ResponseValueObject> setResponseEntity(String message, String errorMsg, long id) {
+    public ResponseEntity<ResponseValueObject> setResponseEntity(String message, String errorMsg, String id) {
         ResponseValueObject responseValueObj = ResponseValueObject.builder()
                 .message(message).id(id).build();
 

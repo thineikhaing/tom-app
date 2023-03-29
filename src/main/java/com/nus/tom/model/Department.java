@@ -1,19 +1,17 @@
 package com.nus.tom.model;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.FetchMode;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.List;
-
-@Getter
-@Setter
+import java.io.Serializable;
+import java.util.Set;
+@EqualsAndHashCode(callSuper = true)
+@Builder
+@Data
 @Entity
 @Table(name = "department")
-public class Department {
+public class Department extends AuditableEntity implements Serializable {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
@@ -27,7 +25,7 @@ public class Department {
     private Employee departmentHead;
 
     @OneToMany(mappedBy = "department", fetch= FetchType.EAGER)
-    private List<Employee> employees;
+    private Set<Employee> employees;
 
     private String details;
 
