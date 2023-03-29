@@ -7,4 +7,9 @@ public class TOMConstants {
 
     public static final String EMPLOYEE_NOT_EXIST = "Employee is not found!";
 
+    public static final String LEAVE_BALANCE_LOWER = "Leave balance is lower Or Invalid Leave request!";
+
+    public static final String DUPLICATE_lEAVE = "Duplicate leave period!";
+
+
 }

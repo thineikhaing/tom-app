@@ -53,7 +53,7 @@ public class Employee extends AuditableEntity implements Serializable {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", fetch= FetchType.EAGER)
     private Set<Leave> leaves;
 
 }

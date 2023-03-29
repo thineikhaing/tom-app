@@ -26,6 +26,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
+    enable_lazy_load_no_trans : true
 # Logger configuration
 logging:
   pattern:
@@ -41,6 +42,16 @@ jwt:
   secret: "appSecretKey"
   expirationMs: 86400000
 message: "dev environment"
+
+#leave balance configuration
+leave:
+  mapping :
+    annual: 14
+    mc: 14
+    cc: 2
+    marriage: 4
+    hospitalized: 60
+
 
 ---
 spring:
@@ -75,3 +86,12 @@ jwt:
   secret: "appSecretKey"
   expirationMs: 86400000
 message: "staging environment"
+
+#leave balance configuration
+leave:
+  mapping :
+    annual: 14
+    mc: 14
+    cc: 2
+    marriage: 4
+    hospitalized: 60
