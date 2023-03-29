@@ -1,5 +1,6 @@
 package com.nus.tom.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -49,9 +50,11 @@ public class Employee extends AuditableEntity implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date employment_endDate;
 
+
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
 
     @OneToMany(mappedBy = "employee")
     private Set<Leave> leaves;

@@ -1,5 +1,6 @@
 package com.nus.tom.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -9,9 +10,9 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-@Builder
+//@Builder
+@NoArgsConstructor
 @Data
-
 @Entity
 @Table(name = "department")
 public class Department extends AuditableEntity implements Serializable {
@@ -22,6 +23,7 @@ public class Department extends AuditableEntity implements Serializable {
 
     @Column(nullable = false)
     private String name;
+
 
     @OneToOne
     @JoinColumn(name = "department_head_id", referencedColumnName = "id")
@@ -41,4 +43,16 @@ public class Department extends AuditableEntity implements Serializable {
         employees.remove(employee);
         employee.setDepartment(null);
     }
+
+//    public Department() {
+//    }
+//
+//    public Department(String name, Employee departmentHead, Set<Employee> employees, String details) {
+//        this.name = name;
+//        this.departmentHead = departmentHead;
+//        this.employees = employees;
+//        this.details = details;
+//    }
+
+
 }

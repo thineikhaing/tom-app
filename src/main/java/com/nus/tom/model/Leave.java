@@ -30,7 +30,7 @@ public class Leave extends AuditableEntity implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "status")
+    @Column(name = "leaveType")
     private String leaveType;
     @ManyToOne
     @JoinColumn(name = "employee_id")

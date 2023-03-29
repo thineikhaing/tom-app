@@ -6,6 +6,8 @@ import com.nus.tom.model.ResponseValueObject;
 import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.service.EmployeeService;
+//import com.nus.tom.util.ResourceNotFoundException;
+import com.nus.tom.util.ResourceNotFoundException;
 import com.nus.tom.util.ResponseHelper;
 import com.nus.tom.util.TOMConstants;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +48,56 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public Employee getEmployeeById(String id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isPresent()) {
+            return employee.get();
+        } else {
+            throw new ResourceNotFoundException("Employee", "id", id);
+        }
+    }
+
+    @Override
+    public Employee createEmployee(Employee employee) {
+        Department department = departmentRepository.findById(employee.getDepartment().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
+        employee.setDepartment(department);
+        return employeeRepository.save(employee);
+    }
+
+    @Override
+    public Employee updateEmployee(String id, Employee employee) {
+        Employee existingEmployee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id));
+        Department department = departmentRepository.findById(employee.getDepartment().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
+        existingEmployee.setFullName(employee.getFullName());
+        existingEmployee.setAddress(employee.getAddress());
+        existingEmployee.setContactNumber(employee.getContactNumber());
+        existingEmployee.setLeaveBalance(employee.getLeaveBalance());
+        existingEmployee.setDateOfBirth(employee.getDateOfBirth());
+        existingEmployee.setEmployment_startDate(employee.getEmployment_startDate());
+        existingEmployee.setEmployment_endDate(employee.getEmployment_endDate());
+        existingEmployee.setDepartment(department);
+        return employeeRepository.save(existingEmployee);
+    }
+
+    @Override
+    public void deleteEmployee(String id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isPresent()) {
+            employeeRepository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException("Employee", "id", id);
+        }
+    }
+
 
 }
