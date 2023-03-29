@@ -19,7 +19,7 @@ public class Employee extends AuditableEntity implements Serializable {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-    private long id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "department_id")

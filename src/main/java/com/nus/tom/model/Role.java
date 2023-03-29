@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role extends AuditableEntity implements Serializable {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")

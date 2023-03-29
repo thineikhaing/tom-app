@@ -7,13 +7,14 @@ import lombok.Setter;
 import org.hibernate.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "department")
-public class Department {
+public class Department extends AuditableEntity implements Serializable {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")

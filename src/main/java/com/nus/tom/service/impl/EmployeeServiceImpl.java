@@ -32,6 +32,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             log.error("Exception in saving employee {}", ex.getStackTrace());
             return responseHelper.setResponseEntity(TOMConstants.ERROR, TOMConstants.EMPTY_STRING, employee.getId());
         }
+
+    }
+
+    @Override
+    public Employee addEmployee(Employee employee) {
+        return employeeRepository.save(employee);
     }
 
 }

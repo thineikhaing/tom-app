@@ -27,7 +27,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (department.isPresent()) {
             return department.get();
         } else {
-            throw new ResourceNotFoundException("Department not found with id: " + id);
+            throw new RuntimeException("Department not found with id: " + id);
         }
     }
 
@@ -43,7 +43,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             department.setId(id);
             return departmentRepository.save(department);
         } else {
-            throw new ResourceNotFoundException("Department not found with id: " + id);
+            throw new RuntimeException("Department not found with id: " + id);
         }
     }
 
@@ -53,7 +53,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (department.isPresent()) {
             departmentRepository.deleteById(id);
         } else {
-            throw new ResourceNotFoundException("Department not found with id: " + id);
+            throw new RuntimeException("Department not found with id: " + id);
         }
     }
 }

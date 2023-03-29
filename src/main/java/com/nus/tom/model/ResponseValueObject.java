@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Builder
 public class ResponseValueObject implements Serializable {
 
-   private long id;
+   private String id;
    private String message;
    private ErrorObject errors;
 }

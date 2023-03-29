@@ -9,4 +9,6 @@ import java.util.List;
 public interface EmployeeService {
 
     ResponseEntity<ResponseValueObject> save(Employee employee);
+
+    Employee addEmployee(Employee employee);
 }
