@@ -20,8 +20,11 @@ public class User {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-//    @Column(length = 36, nullable = false, updatable = false)
     private String id;
+
+    @OneToOne(mappedBy = "user")
+    private Employee employee;
+
     @NotBlank
     @Size(max = 20)
     private String username;
