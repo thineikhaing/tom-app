@@ -1,8 +1,12 @@
 package com.nus.tom.dtos;
 
+import com.nus.tom.model.Department;
 import com.nus.tom.model.Employee;
 import com.nus.tom.model.Leave;
+import com.nus.tom.repository.DepartmentRepository;
+import com.nus.tom.util.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +19,8 @@ public class EmployeeMapper {
 
     private final ModelMapper modelMapper;
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
     public EmployeeMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
         configureModelMapper();
@@ -24,7 +30,7 @@ public class EmployeeMapper {
         // Configure ModelMapper mappings here if needed
     }
 
-    public EmployeeDTO toDto(Employee employee) {
+    public EmployeeDTO toEmployeeDTO(Employee employee) {
         EmployeeDTO employeeDTO = modelMapper.map(employee, EmployeeDTO.class);
 
         if (employee.getDepartment() != null) {
@@ -84,4 +90,20 @@ public class EmployeeMapper {
         // Add any additional mapping logic here if needed
     }
 
+    public Employee toEmployee(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        employee.setId(employeeDTO.getId());
+        employee.setFullName(employeeDTO.getFullName());
+        employee.setEmail(employeeDTO.getEmail());
+        employee.setAddress(employeeDTO.getAddress());
+        employee.setContactNumber(employeeDTO.getContactNumber());
+        employee.setLeaveBalance(employeeDTO.getLeaveBalance());
+        employee.setDateOfBirth(employeeDTO.getDateOfBirth());
+        employee.setEmployment_startDate(employeeDTO.getEmployment_startDate());
+        employee.setEmployment_endDate(employeeDTO.getEmployment_endDate());
+        Department department = departmentRepository.findById(employeeDTO.getDepartment().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employeeDTO.getDepartment().getId()));
+        employee.setDepartment(department);
+        return employee;
+    }
 }

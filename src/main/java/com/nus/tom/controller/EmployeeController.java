@@ -153,69 +153,7 @@ public class EmployeeController {
         if (employee == null) {
             return ResponseEntity.notFound().build();
         }
-
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setId(employee.getId());
-        employeeDTO.setFullName(employee.getFullName());
-        employeeDTO.setAddress(employee.getAddress());
-        employeeDTO.setContactNumber(employee.getContactNumber());
-        employeeDTO.setLeaveBalance(employee.getLeaveBalance());
-        employeeDTO.setDateOfBirth(employee.getDateOfBirth());
-        employeeDTO.setEmployment_startDate(employee.getEmployment_startDate());
-        employeeDTO.setEmployment_endDate(employee.getEmployment_endDate());
-
-        if (employee.getDepartment() != null) {
-            DepartmentDTO departmentDTO = new DepartmentDTO();
-            departmentDTO.setId(employee.getDepartment().getId());
-            departmentDTO.setName(employee.getDepartment().getName());
-            employeeDTO.setDepartment(departmentDTO);
-        }
-
-        if (employee.getUser() != null) {
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(employee.getUser().getId());
-            userDTO.setUsername(employee.getUser().getUsername());
-            userDTO.setEmail(employee.getUser().getEmail());
-            // Set user roles
-            Set<Role> roles = employee.getUser().getRoles();
-            if (roles != null) {
-                Set<RoleDTO> roleDTOs = new HashSet<>();
-                for (Role role : roles) {
-                    RoleDTO roleDTO = new RoleDTO();
-                    roleDTO.setId(role.getId());
-                    roleDTO.setName(role.getName());
-                    roleDTOs.add(roleDTO);
-                }
-                userDTO.setRoles(roleDTOs);
-            }
-
-            employeeDTO.setUser(userDTO);
-        }
-
-        if (employee.getProject() != null) {
-            ProjectDTO projectDTO = new ProjectDTO();
-            projectDTO.setId(employee.getProject().getId());
-            projectDTO.setName(employee.getProject().getName());
-            projectDTO.setStartDate(employee.getProject().getStartDate());
-            projectDTO.setEndDate(employee.getProject().getEndDate());
-            employeeDTO.setProject(projectDTO);
-        }
-
-        Set<LeaveDTO> leaveDTOs = new HashSet<>();
-        if (employee.getLeaves() != null) {
-            for (Leave leave : employee.getLeaves()) {
-                LeaveDTO leaveDTO = new LeaveDTO(leave);
-                leaveDTO.setId(leave.getId());
-                leaveDTO.setName(leave.getName());
-                leaveDTO.setStartDate(leave.getStartDate());
-                leaveDTO.setEndDate(leave.getEndDate());
-                leaveDTO.setStatus(leave.getStatus());
-                leaveDTO.setLeaveType(leave.getLeaveType());
-                leaveDTOs.add(leaveDTO);
-            }
-        }
-        employeeDTO.setLeaves(leaveDTOs);
-
+        EmployeeDTO employeeDTO = employeeMapper.toEmployeeDTO(employee);
         return ResponseEntity.ok().body(employeeDTO);
     }
 
@@ -223,79 +161,9 @@ public class EmployeeController {
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable(value = "id") String id,
                                                       @RequestBody EmployeeDTO employeeDTO) {
-        Employee employee = employeeService.getEmployeeById(id);
-        if (employee == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        // Update basic employee information
-        employee.setFullName(employeeDTO.getFullName());
-        employee.setAddress(employeeDTO.getAddress());
-        employee.setContactNumber(employeeDTO.getContactNumber());
-        employee.setDateOfBirth(employeeDTO.getDateOfBirth());
-
-        // Update department information
-        if (employeeDTO.getDepartment() != null) {
-
-            Department department = departmentService.getDepartmentById(employeeDTO.getDepartment().getId());
-            if (department != null) {
-                employee.setDepartment(department);
-            }
-        } else {
-            employee.setDepartment(null);
-        }
-
-        // Update user information
-        if (employeeDTO.getUser() != null) {
-
-
-            UserDTO user = userService.getUserById(employeeDTO.getUser().getId());
-            if (user != null) {
-                user.setUsername(employeeDTO.getUser().getUsername());
-                user.setEmail(employeeDTO.getUser().getEmail());
-
-                // Update roles information
-//                Set<Role> roles = new HashSet<>();
-//                for (RoleDTO roleName : employeeDTO.getUser().getRoles()) {
-//                    Role role = roleService.getRoleByName(ERole.valueOf(roleName));
-//                    if (role != null) {
-//                        roles.add(role);
-//                    }
-//                }
-//                user.setRoles(roles);
-//
-//                employee.setUser(user);
-            }
-        } else {
-            employee.setUser(null);
-        }
-
-        // Update project information
-//        if (employeeDTO.getProjectId() != null) {
-//            Project project = projectService.getProjectById(employeeDTO.getProjectId());
-//            if (project != null) {
-//                employee.setProject(project);
-//            }
-//        } else {
-//            employee.setProject(null);
-//        }
-//
-//        // Update leaves information
-//        if (employeeDTO.getLeaveIds() != null) {
-//            List<Leave> leaves = new ArrayList<>();
-//            for (String leaveId : employeeDTO.getLeaveIds()) {
-//                Leave leave = leaveService.getLeaveById(leaveId);
-//                if (leave != null) {
-//                    leaves.add(leave);
-//                }
-//            }
-//            employee.setLeaves(leaves);
-//        } else {
-//            employee.setLeaves(null);
-//        }
-
-        employeeService.createEmployee(employee);
-        EmployeeDTO updatedEmployeeDTO = employeeMapper.toDto(employee);
+        Employee employee = employeeMapper.toEmployee(employeeDTO);
+        Employee updatedEmployee = employeeService.updateEmployee(id, employee);
+        EmployeeDTO updatedEmployeeDTO = employeeMapper.toEmployeeDTO(updatedEmployee);
         return ResponseEntity.ok().body(updatedEmployeeDTO);
     }
 

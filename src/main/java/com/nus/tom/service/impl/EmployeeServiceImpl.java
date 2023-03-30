@@ -1,9 +1,10 @@
 package com.nus.tom.service.impl;
 
-import com.nus.tom.model.Employee;
-import com.nus.tom.model.ResponseValueObject;
+import com.nus.tom.model.*;
 import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
+import com.nus.tom.repository.RoleRepository;
+import com.nus.tom.repository.UserRepository;
 import com.nus.tom.service.EmployeeService;
 //import com.nus.tom.util.ResourceNotFoundException;
 import com.nus.tom.util.ResourceNotFoundException;
@@ -11,8 +12,15 @@ import com.nus.tom.util.ResponseHelper;
 import com.nus.tom.util.TOMConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -23,6 +31,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final DepartmentRepository departmentRepository;
     private final ResponseHelper responseHelper;
+
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    PasswordEncoder encoder;
 
     @Override
     public ResponseEntity<ResponseValueObject> save(Employee employee) {
@@ -62,6 +77,25 @@ public class EmployeeServiceImpl implements EmployeeService {
         Department department = departmentRepository.findById(employee.getDepartment().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
         employee.setDepartment(department);
+
+
+        User user = new User();
+        user.setUsername(employee.getFullName().replaceAll(" ", "_").toLowerCase());
+        user.setEmail(employee.getEmail());
+        user.setPassword(encoder.encode("password"));
+
+        Set<Role> roles = new HashSet<>();
+        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(userRole);
+        user.setRoles(roles);
+        userRepository.save(user);
+
+        User newuser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found","id", user.getId()));
+
+        employee.setUser(newuser);
+
         return employeeRepository.save(employee);
     }
 
@@ -72,6 +106,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Department department = departmentRepository.findById(employee.getDepartment().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
         existingEmployee.setFullName(employee.getFullName());
+        existingEmployee.setEmail(employee.getEmail());
         existingEmployee.setAddress(employee.getAddress());
         existingEmployee.setContactNumber(employee.getContactNumber());
         existingEmployee.setLeaveBalance(employee.getLeaveBalance());
