@@ -1,5 +1,6 @@
-package com.nus.tom.dtos;
+package com.nus.tom.mappers;
 
+import com.nus.tom.dtos.*;
 import com.nus.tom.model.Department;
 import com.nus.tom.model.Employee;
 import com.nus.tom.model.Leave;
@@ -15,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class EmployeeMapper {
+public class EmployeeMapper{
 
     private final ModelMapper modelMapper;
 
@@ -46,11 +47,10 @@ public class EmployeeMapper {
             userDTO.setUsername(employee.getUser().getUsername());
             userDTO.setEmail(employee.getUser().getEmail());
 
-//            Set<String> roles = employee.getUser().getRoles().stream()
-//                    .map(role -> role.getName().toString())
-//                    .collect(Collectors.toSet());
-//
-//            userDTO.setRoles(roles);
+            Set<String> roles = employee.getUser().getRoles().stream()
+                    .map(role -> role.getName().toString())
+                    .collect(Collectors.toSet());
+            userDTO.setRoles(roles);
             employeeDTO.setUser(userDTO);
         }
 
@@ -79,19 +79,14 @@ public class EmployeeMapper {
         return employeeDTO;
     }
 
-    public Employee toEntity(EmployeeDTO employeeDTO) {
-        Employee employee = modelMapper.map(employeeDTO, Employee.class);
-        // Add any additional mapping logic here if needed
-        return employee;
-    }
-
     public void updateEntity(EmployeeDTO employeeDTO, Employee employee) {
         modelMapper.map(employeeDTO, employee);
         // Add any additional mapping logic here if needed
     }
 
     public Employee toEmployee(EmployeeDTO employeeDTO) {
-        Employee employee = new Employee();
+//        Employee employee = new Employee();
+        Employee employee = modelMapper.map(employeeDTO, Employee.class);
         employee.setId(employeeDTO.getId());
         employee.setFullName(employeeDTO.getFullName());
         employee.setEmail(employeeDTO.getEmail());

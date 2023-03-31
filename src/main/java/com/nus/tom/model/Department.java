@@ -25,14 +25,16 @@ public class Department extends AuditableEntity implements Serializable {
     private String name;
 
 
-    @OneToOne
-    @JoinColumn(name = "department_head_id", referencedColumnName = "id")
-    private Employee departmentHead;
+//    @OneToOne(fetch= FetchType.LAZY)
+//    @JoinColumn(name = "department_head_id", referencedColumnName = "id")
+//    private Employee departmentHead;
 
     @OneToMany(mappedBy = "department", fetch= FetchType.EAGER)
     private Set<Employee> employees;
 
     private String details;
+
+
 
     public void addEmployee(Employee employee) {
         employees.add(employee);
@@ -44,14 +46,18 @@ public class Department extends AuditableEntity implements Serializable {
         employee.setDepartment(null);
     }
 
-//    public Department() {
-//    }
-//
+    public Department(String name, String details) {
+        this.name = name;
+        this.details = details;
+    }
+
+    public Department(String name, Set<Employee> employees, String details) {
+        this.name = name;
+        this.employees = employees;
+        this.details = details;
+    }
+
 //    public Department(String name, Employee departmentHead, Set<Employee> employees, String details) {
-//        this.name = name;
-//        this.departmentHead = departmentHead;
-//        this.employees = employees;
-//        this.details = details;
 //    }
 
 

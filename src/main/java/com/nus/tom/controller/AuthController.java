@@ -1,7 +1,7 @@
 package com.nus.tom.controller;
 
 
-import com.nus.tom.model.ERole;
+import com.nus.tom.model.enums.ERole;
 import com.nus.tom.model.Role;
 import com.nus.tom.model.User;
 import com.nus.tom.payload.request.LoginRequest;

@@ -1,10 +1,5 @@
 package com.nus.tom.controller;
 
-import com.nus.tom.dtos.UserDTO;
-import com.nus.tom.dtos.UserMapper;
-import com.nus.tom.model.User;
-import com.nus.tom.service.UserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

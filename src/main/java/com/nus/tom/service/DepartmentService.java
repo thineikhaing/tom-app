@@ -1,6 +1,7 @@
 package com.nus.tom.service;
 
 import com.nus.tom.model.Department;
+import com.nus.tom.model.Employee;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface DepartmentService {
 
     void deleteDepartment(String id);
 
+//    Department assignDepartmentHead(String departmentId, Employee employee);
 }
