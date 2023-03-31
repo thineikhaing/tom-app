@@ -1,6 +1,9 @@
 package com.nus.tom.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +31,7 @@ public class Employee extends AuditableEntity implements Serializable {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -53,7 +56,12 @@ public class Employee extends AuditableEntity implements Serializable {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @OneToMany(mappedBy = "employee", fetch= FetchType.EAGER)
+    @OneToMany(mappedBy = "employee", fetch= FetchType.LAZY)
+
     private Set<Leave> leaves;
+
+    @Size(max = 50)
+    @Email
+    private String email;
 
 }
