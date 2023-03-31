@@ -3,6 +3,27 @@ spring:
     active: sit
 ---
 spring:
+  mail:
+    username: myapwintnus@gmail.com
+    password : mqesmczmfsergwpp
+    debug: false
+    host: smtp.gmail.com
+    port: 25
+    properties:
+      mail:
+        protocol: smtp
+        smtp:
+          ssl:
+            enable: false
+            trust: "*"
+          auth: false
+          starttls:
+            enable: true
+            required: false
+  freemarker:
+    template-loader-path: classpath:/ftl
+    suffix: .ftl
+    checkTemplateLocation: false
   config:
     activate:
       on-profile: sit
@@ -52,9 +73,29 @@ leave:
     marriage: 4
     hospitalized: 60
 
-
 ---
 spring:
+  mail:
+    username: myapwintnus@gmail.com
+    password: mqesmczmfsergwpp
+    debug: false
+    host: smtp.gmail.com
+    port: 25
+    properties:
+      mail:
+        protocol: smtp
+        smtp:
+          ssl:
+            enable: false
+            trust: "*"
+          auth: false
+          starttls:
+            enable: true
+            required: false
+  freemarker:
+    template-loader-path: classpath:/ftl
+    suffix: .ftl
+    checkTemplateLocation: false
   config:
     activate:
       on-profile: staging

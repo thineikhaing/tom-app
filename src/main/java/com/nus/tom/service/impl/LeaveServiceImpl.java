@@ -34,6 +34,8 @@ public class LeaveServiceImpl implements LeaveService {
 
     private final LeaveConfig leaveConfig;
 
+    private final EmailService emailService;
+
 
     /**
      * apply leave
@@ -91,6 +93,8 @@ public class LeaveServiceImpl implements LeaveService {
         leave.setStatus(LeaveStatus.PENDING.value);
         leaveRepository.save(leave);
         log.info("save leave for {}", leave.getEmployee().getId());
+        log.info("sending email {}", employee.getFullName());
+        emailService.sendEmail(employee);
         return responseHelper.setResponseEntity(TOMConstants.SUCCESS, TOMConstants.EMPTY_STRING, leave.getId());
     }
 
