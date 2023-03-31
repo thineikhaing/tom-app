@@ -2,14 +2,11 @@ package com.nus.tom.service.impl;
 
 
 import com.nus.tom.model.*;
-import com.nus.tom.model.Employee;
-import com.nus.tom.model.ResponseValueObject;
 import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.repository.RoleRepository;
 import com.nus.tom.repository.UserRepository;
 import com.nus.tom.service.EmployeeService;
-//import com.nus.tom.util.ResourceNotFoundException;
 import com.nus.tom.util.ResourceNotFoundException;
 import com.nus.tom.util.ResponseHelper;
 import com.nus.tom.util.TOMConstants;
@@ -35,12 +32,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentRepository departmentRepository;
     private final ResponseHelper responseHelper;
 
+
     @Autowired
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
     @Autowired
     PasswordEncoder encoder;
+
 
     @Override
     public ResponseEntity<ResponseValueObject> save(Employee employee) {
@@ -54,6 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
     }
+
 
     @Override
     public Employee addEmployee(Employee employee) {
@@ -95,7 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         userRepository.save(user);
 
         User newuser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found","id", user.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found", "id", user.getId()));
 
         employee.setUser(newuser);
 
