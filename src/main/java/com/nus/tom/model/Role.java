@@ -1,6 +1,7 @@
 package com.nus.tom.model;
 
 
+import com.nus.tom.model.enums.ERole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

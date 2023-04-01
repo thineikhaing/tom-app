@@ -1,4 +1,4 @@
-package com.nus.tom.model;
+package com.nus.tom.model.enums;
 
 public enum ERole {
     ROLE_USER,

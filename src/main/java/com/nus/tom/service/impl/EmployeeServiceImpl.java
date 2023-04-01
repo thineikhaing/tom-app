@@ -2,6 +2,10 @@ package com.nus.tom.service.impl;
 
 
 import com.nus.tom.model.*;
+
+import com.nus.tom.model.Employee;
+import com.nus.tom.model.ResponseValueObject;
+import com.nus.tom.model.enums.ERole;
 import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.repository.RoleRepository;
@@ -26,9 +30,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
-
     private final EmployeeRepository employeeRepository;
-
     private final DepartmentRepository departmentRepository;
     private final ResponseHelper responseHelper;
 
@@ -54,11 +56,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
-
-    @Override
-    public Employee addEmployee(Employee employee) {
-        return employeeRepository.save(employee);
-    }
 
     @Override
     public List<Employee> getAllEmployees() {
@@ -129,6 +126,8 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new ResourceNotFoundException("Employee", "id", id);
         }
     }
+
+
 
 
 }

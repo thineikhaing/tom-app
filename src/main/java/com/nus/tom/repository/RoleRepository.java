@@ -1,7 +1,7 @@
 package com.nus.tom.repository;
 
 
-import com.nus.tom.model.ERole;
+import com.nus.tom.model.enums.ERole;
 import com.nus.tom.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 

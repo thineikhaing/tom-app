@@ -1,11 +1,16 @@
 package com.nus.tom.controller;
 
+import com.nus.tom.dtos.DepartmentDTO;
+import com.nus.tom.mappers.DepartmentMapper;
 import com.nus.tom.model.Department;
 import com.nus.tom.service.DepartmentService;
+import com.nus.tom.service.EmployeeService;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/departments")
@@ -13,10 +18,24 @@ public class DepartmentController {
 
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private final EmployeeService employeeService;
+
+    private final DepartmentMapper departmentMapper;
+
+    public DepartmentController(DepartmentService departmentService, EmployeeService employeeService, DepartmentMapper departmentMapper) {
+        this.departmentService = departmentService;
+        this.employeeService = employeeService;
+        this.departmentMapper = departmentMapper;
+    }
 
     @GetMapping("")
-    public List<Department> getAllDepartments() {
-        return departmentService.getAllDepartments();
+    public ResponseEntity<List<DepartmentDTO>> getAllDepartments() {
+        List<Department> departments = departmentService.getAllDepartments();
+        List<DepartmentDTO> departmentDTOs = departments.stream()
+                .map(department -> departmentMapper.toDepartmentDTO(department))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(departmentDTOs);
     }
 
     @GetMapping("/{id}")
@@ -38,4 +57,13 @@ public class DepartmentController {
     public void deleteDepartment(@PathVariable("id") String id) {
         departmentService.deleteDepartment(id);
     }
+
+    // POST mapping to assign department head
+//    @PostMapping("/{departmentId}/assignHead")
+//    public ResponseEntity<?> assignDepartmentHead(@PathVariable(value = "departmentId") String departmentId, @RequestBody Employee employee) {
+//        Department department = departmentService.assignDepartmentHead(departmentId, employee);
+//        return new ResponseEntity<>(department, HttpStatus.OK);
+//    }
+
+
 }

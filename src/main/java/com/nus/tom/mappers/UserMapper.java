@@ -1,5 +1,6 @@
-package com.nus.tom.dtos;
+package com.nus.tom.mappers;
 
+import com.nus.tom.dtos.UserDTO;
 import com.nus.tom.model.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

@@ -1,25 +1,25 @@
 {
 	"info": {
-		"_postman_id": "8ecef056-e322-4589-8f64-86f91c52c7d7",
-		"name": "api",
+		"_postman_id": "d5ca0c85-8398-4568-b20b-9fd4f2b8a476",
+		"name": "javaJwt",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26557714"
+		"_exporter_id": "359079"
 	},
 	"item": [
 		{
-			"name": "Save Employee",
+			"name": "signup",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJteWEiLCJpYXQiOjE2ODAwNzYzMDYsImV4cCI6MTY4MDE2MjcwNn0.SqhqB4G5wjsgXHr7YEow3lWIwVcMQ7gQASQlRaJEU-Nmo3eVyY7DtXdKJtzoDzbAYT_TKctwnOZrk9yYA5c4Dw",
+						"value": "Bearer ",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"1\",\r\n    \"fullName\": \"Mya Pwint Cho\"\r\n}",
+					"raw": "{\n    \"username\": \"thin\",\n    \"email\": \"thin@email.com\",\n    \"password\": \"123456\",\n    \"role\": [\"admin\",\"user\"]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -27,35 +27,36 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/tom/employee/saveEmployee",
+					"raw": "http://localhost:8080/api/auth/signup",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"api",
-						"tom",
-						"employee",
-						"saveEmployee"
+						"auth",
+						"signup"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Apply Leave",
+			"name": "login",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJteWEiLCJpYXQiOjE2ODAwNzYzMDYsImV4cCI6MTY4MDE2MjcwNn0.SqhqB4G5wjsgXHr7YEow3lWIwVcMQ7gQASQlRaJEU-Nmo3eVyY7DtXdKJtzoDzbAYT_TKctwnOZrk9yYA5c4Dw",
-						"type": "text"
+						"value": "Bearer ",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"leaveType\": \"Annual Leave\",\r\n    \"employee\": {\r\n        \"id\": \"bf9286bf-cc80-4aae-814c-4d35ed44f573\"\r\n    },\r\n    \"startDate\": \"2023-04-01T00:00:00.00Z\",\r\n    \"endDate\": \"2023-04-03T12:00:00.00Z\"\r\n}",
+					"raw": "{\n    \"username\": \"thin\",\n    \"password\": \"123456\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -63,20 +64,536 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/tom/leave/applyLeave",
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"api",
-						"tom",
-						"leave",
-						"applyLeave"
+						"auth",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "thin",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"disabled": true
+						}
 					]
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "public_content",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/main/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"main",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_content",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjc5MjQyMjUyLCJleHAiOjE2NzkzMjg2NTJ9.tUfWcLmQmXa-DJirFTIexTphjcPCc8om2DsHM_AmpgjJJUyR2Mib1h5AMbvMtCiqaj0qVOKPcR6dTR8Q_NRplg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/main/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"main",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin_content",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjc5MjQyMjUyLCJleHAiOjE2NzkzMjg2NTJ9.tUfWcLmQmXa-DJirFTIexTphjcPCc8om2DsHM_AmpgjJJUyR2Mib1h5AMbvMtCiqaj0qVOKPcR6dTR8Q_NRplg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/main/admin",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"main",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "manager_content",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjc3MzMyNTU2LCJleHAiOjE2Nzc0MTg5NTZ9.96hUSWwrNDZ9zV_xd5rqx7PDE3MzDF4_AdvirFUwUOXaLCkPYwV_mqJd-1qXGwv9AX57mXuZYcpRtTXdGjUPWg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/main/manager",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"main",
+						"manager"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "department_list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjc3MzMyNTU2LCJleHAiOjE2Nzc0MTg5NTZ9.96hUSWwrNDZ9zV_xd5rqx7PDE3MzDF4_AdvirFUwUOXaLCkPYwV_mqJd-1qXGwv9AX57mXuZYcpRtTXdGjUPWg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/departments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"departments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_new_department",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjc5OTk4MDkxLCJleHAiOjE2ODAwODQ0OTF9.hz10cEAohCh1IHnuc1Y0bAZnBpC64gMIShRyJIcTCwU92dSQ8WQ5IutBpbeawh4OT5lOx5QU35dQDW5PAOWTvw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"name\": \"Human Resources\",\n    \"details\": \"Human Resources Department.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/departments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"departments"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Human Resources and Talent Acquisition",
+							"disabled": true
+						},
+						{
+							"key": "details",
+							"value": "HR department performs human resource management functions.",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_department_details",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjc5OTk4MDkxLCJleHAiOjE2ODAwODQ0OTF9.hz10cEAohCh1IHnuc1Y0bAZnBpC64gMIShRyJIcTCwU92dSQ8WQ5IutBpbeawh4OT5lOx5QU35dQDW5PAOWTvw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"name\": \"Sales and Marketing\",\n    \"details\": \"Sales and Marketing Department .\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/departments/a7521f1e-b62b-4cd4-9db3-504771b9753f",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"departments",
+						"a7521f1e-b62b-4cd4-9db3-504771b9753f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "assign_department_head",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{tom_api_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"id\": \"be4f3a98-04db-4151-8452-6a051d89b818\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/departments/f69ca5fe-a717-4f5b-a60a-c5d697694609/assignHead",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"departments",
+						"f69ca5fe-a717-4f5b-a60a-c5d697694609",
+						"assignHead"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_department_by_id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjc5OTk4MDkxLCJleHAiOjE2ODAwODQ0OTF9.hz10cEAohCh1IHnuc1Y0bAZnBpC64gMIShRyJIcTCwU92dSQ8WQ5IutBpbeawh4OT5lOx5QU35dQDW5PAOWTvw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/departments/1d4df1e2-5789-4fef-bd00-46b65682c9d9",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"departments",
+						"1d4df1e2-5789-4fef-bd00-46b65682c9d9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_department",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjc5OTk4MDkxLCJleHAiOjE2ODAwODQ0OTF9.hz10cEAohCh1IHnuc1Y0bAZnBpC64gMIShRyJIcTCwU92dSQ8WQ5IutBpbeawh4OT5lOx5QU35dQDW5PAOWTvw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/departments/18d2cc8f-28f5-44af-8ad2-40d161087060",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"departments",
+						"18d2cc8f-28f5-44af-8ad2-40d161087060"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "employee_list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwMTA2Nzk2LCJleHAiOjE2ODAxOTMxOTZ9.Mad-61vUjZCr6RyajBaQvLV3VafEwmz9CagNRp2eXZsAczuo7B-_A6C-dplcXbkjaA0P28FRQnZuWN5g1la0pQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_new_employee",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{tom_api_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fullName\": \"Employee1\",\n    \"email\": \"emp1@example.com\",\n    \"address\": \"123 Main St\",\n    \"contactNumber\": \"555-1234\",\n    \"leaveBalance\": 20,\n    \"dateOfBirth\": \"1990-01-01\",\n    \"employment_startDate\": \"2022-01-01\",\n    \"employment_endDate\": null,\n    \"department\": {\n        \"id\": \"b64b12c8-7537-4655-a109-cfb729e7dbd0\",\n        \"name\": \"Software Development\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_employee_details",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwMTA2Nzk2LCJleHAiOjE2ODAxOTMxOTZ9.Mad-61vUjZCr6RyajBaQvLV3VafEwmz9CagNRp2eXZsAczuo7B-_A6C-dplcXbkjaA0P28FRQnZuWN5g1la0pQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fullName\": \"grace mg\",\n    \"email\": \"grace@example.com\",\n    \"address\": \"321 Main St\",\n    \"contactNumber\": \"555-1234\",\n    \"leaveBalance\": 20,\n    \"dateOfBirth\": \"1990-01-01\",\n    \"employment_startDate\": \"2022-01-01\",\n    \"employment_endDate\": null,\n    \"department\": {\n        \"id\": \"763cb070-39f5-4182-a750-727251b83300\",\n        \"name\": \"Human Resources\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employees/3c465e83-f473-42eb-a3ca-dfd42f063f5b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees",
+						"3c465e83-f473-42eb-a3ca-dfd42f063f5b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_employee_by_id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwMTA2Nzk2LCJleHAiOjE2ODAxOTMxOTZ9.Mad-61vUjZCr6RyajBaQvLV3VafEwmz9CagNRp2eXZsAczuo7B-_A6C-dplcXbkjaA0P28FRQnZuWN5g1la0pQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fullName\": \"John Doe\",\n    \"address\": \"123 Main St\",\n    \"contactNumber\": \"555-1234\",\n    \"leaveBalance\": 20,\n    \"dateOfBirth\": \"1990-01-01\",\n    \"employment_startDate\": \"2022-01-01\",\n    \"employment_endDate\": null,\n    \"user\": {\n        \"username\": \"john_doe\",\n        \"email\": \"jdoe@example.com\",\n        \"password\": \"password\",\n        \"role\": [\"user\"]\n    },\n    \"department\": {\n        \"id\": \"522ce18d-8e13-4e08-a7cd-e2388707d2fd\",\n        \"name\": \"Software Development\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employees/12c9fdec-3c4d-45b5-8e4d-f8a765e20586",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees",
+						"12c9fdec-3c4d-45b5-8e4d-f8a765e20586"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_employee_by_id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwMTA2Nzk2LCJleHAiOjE2ODAxOTMxOTZ9.Mad-61vUjZCr6RyajBaQvLV3VafEwmz9CagNRp2eXZsAczuo7B-_A6C-dplcXbkjaA0P28FRQnZuWN5g1la0pQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fullName\": \"John Doe\",\n    \"address\": \"123 Main St\",\n    \"contactNumber\": \"555-1234\",\n    \"leaveBalance\": 20,\n    \"dateOfBirth\": \"1990-01-01\",\n    \"employment_startDate\": \"2022-01-01\",\n    \"employment_endDate\": null,\n    \"user\": {\n        \"username\": \"john_doe\",\n        \"email\": \"jdoe@example.com\",\n        \"password\": \"password\",\n        \"role\": [\"user\"]\n    },\n    \"department\": {\n        \"id\": \"522ce18d-8e13-4e08-a7cd-e2388707d2fd\",\n        \"name\": \"Software Development\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employees/12c9fdec-3c4d-45b5-8e4d-f8a765e20586",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees",
+						"12c9fdec-3c4d-45b5-8e4d-f8a765e20586"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "tom_api_token",
+			"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwMTY3OTQwLCJleHAiOjE2ODAyNTQzNDB9.U9ZqnLmPPkW9gZ7Y097PXdeRxKWVkknIIoeJYVKK5UrzdTPIUzWRWzoZPyRnFd4H3cLlPOJ0Gf-6l6D_PY6X2w"
 		}
 	]
 }
