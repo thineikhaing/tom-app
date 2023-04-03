@@ -27,11 +27,15 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String emailSender;
 
+    @Value("${user.activateUrl}")
+    private String activateUrl;
+
     private final Configuration configuration;
 
     /**
      * to send email
      * need design pattern - strategy to set email content and template
+     *
      * @param employee
      */
     public void sendEmail(Employee employee) {
@@ -39,6 +43,7 @@ public class EmailService {
         Map<String, String> emailDetails = new HashMap<>();
         emailDetails.put(FULL_NAME, employee.getFullName());
         emailDetails.put(STATUS, employee.getFullName());
+        emailDetails.put(LINK, activateUrl + employee.getUser().getId());
 
         try {
             String subject = REGISTRATION;
@@ -46,7 +51,7 @@ public class EmailService {
             message.setFrom(emailSender);
             message.setRecipients(MimeMessage.RecipientType.TO, employee.getUser().getEmail());
             message.setSubject(subject);
-            message.setContent(getEmailContent(emailDetails, "employeeRegister.ftl"), CONTENT_TYPE);
+            message.setContent(getEmailContent(emailDetails, EMPLOYEE_FTL), CONTENT_TYPE);
             this.javaMailSender.send(message);
             log.info("Email receiver {} ", employee.getUser().getEmail());
 

@@ -73,6 +73,9 @@ leave:
     marriage: 4
     hospitalized: 60
 
+user:
+  activateUrl: http://localhost:8080/updatePasswordPage/
+
 ---
 spring:
   mail:
@@ -136,3 +139,6 @@ leave:
     cc: 2
     marriage: 4
     hospitalized: 60
+
+user:
+  activateUrl: http://localhost:8080/updatePasswordPage/

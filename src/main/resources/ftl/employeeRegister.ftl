@@ -9,6 +9,7 @@
 <body>
 <div style="margin-top: 10px">Greetings, ${fullName}</div>
 <div>Your username is <b>${fullName}</b></div>
+<div>Please activate <b>${link}</b></div>
 <br/>
 <div> This is a system generated email. Please do not reply.</div>
 </body>
