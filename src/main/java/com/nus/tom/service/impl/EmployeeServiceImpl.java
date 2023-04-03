@@ -2,9 +2,6 @@ package com.nus.tom.service.impl;
 
 
 import com.nus.tom.model.*;
-
-import com.nus.tom.model.Employee;
-import com.nus.tom.model.ResponseValueObject;
 import com.nus.tom.model.enums.ERole;
 import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
@@ -42,12 +39,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     PasswordEncoder encoder;
 
+    private final EmailService emailService;
+
 
     @Override
     public ResponseEntity<ResponseValueObject> save(Employee employee) {
         try {
             log.info("Save employee {}", employee.getFullName());
             employeeRepository.save(employee);
+            emailService.sendEmail(employee);
             return responseHelper.setResponseEntity(TOMConstants.SUCCESS, TOMConstants.EMPTY_STRING, employee.getId());
         } catch (Exception ex) {
             log.error("Exception in saving employee {}", ex.getStackTrace());
@@ -126,8 +126,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new ResourceNotFoundException("Employee", "id", id);
         }
     }
-
-
 
 
 }

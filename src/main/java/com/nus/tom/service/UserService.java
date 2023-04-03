@@ -21,4 +21,5 @@ public interface UserService {
     UserDTO getUserById(String userId);
 
     List<UserDTO> getAllUsers();
+
 }

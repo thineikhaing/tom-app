@@ -1,4 +1,5 @@
 package com.nus.tom.model;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(	name = "users",
+@Table(name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
@@ -40,7 +41,7 @@ public class User extends AuditableEntity implements Serializable {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(	name = "user_roles",
+    @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
@@ -53,5 +54,8 @@ public class User extends AuditableEntity implements Serializable {
         this.email = email;
         this.password = password;
     }
+
+    @Column
+    private boolean activated = false;
 
 }
