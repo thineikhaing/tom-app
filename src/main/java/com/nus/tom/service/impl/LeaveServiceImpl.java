@@ -1,5 +1,6 @@
 package com.nus.tom.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nus.tom.model.Employee;
 import com.nus.tom.model.Leave;
 import com.nus.tom.model.ResponseValueObject;
@@ -9,6 +10,7 @@ import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.repository.LeaveRepository;
 import com.nus.tom.service.LeaveService;
+import com.nus.tom.util.JsonHandler;
 import com.nus.tom.util.LeaveConfig;
 import com.nus.tom.util.ResponseHelper;
 import com.nus.tom.util.TOMConstants;
@@ -36,23 +38,29 @@ public class LeaveServiceImpl implements LeaveService {
 
     private final EmailService emailService;
 
+    private final JsonHandler jsonHandler;
+
+
+    private final ObjectMapper objectMapper;
 
     /**
      * apply leave
      *
-     * @param leave
+     * @param payload
      * @return
      */
     @Override
-    public ResponseEntity<ResponseValueObject> save(Leave leave) {
+    public ResponseEntity<ResponseValueObject> save(String payload) {
         try {
+
+            Leave leave = jsonHandler.fromJson(payload, Leave.class);
 
             return checkAndSave(leave);
 
 
         } catch (Exception ex) {
             log.error("Exception in saving leave {}", ex.getStackTrace());
-            return responseHelper.setResponseEntity(TOMConstants.ERROR, TOMConstants.EMPTY_STRING, leave.getId());
+            return responseHelper.setResponseEntity(TOMConstants.ERROR, TOMConstants.EMPTY_STRING, payload);
         }
     }
 
@@ -78,7 +86,7 @@ public class LeaveServiceImpl implements LeaveService {
      * @param leave
      * @return
      */
-    private ResponseEntity<ResponseValueObject> checkAndSave(Leave leave) {
+        private ResponseEntity<ResponseValueObject> checkAndSave(Leave leave) {
         Employee employee = employeeRepository.findById(leave.getEmployee().getId()).orElse(null);
 
         if (Objects.isNull(employee))
@@ -92,7 +100,7 @@ public class LeaveServiceImpl implements LeaveService {
 
         leave.setStatus(LeaveStatus.PENDING.value);
         leaveRepository.save(leave);
-        log.info("save leave for {}", leave.getEmployee().getId());
+        log.info("saved leave for {}", leave.getEmployee().getId());
         log.info("sending email {}", employee.getFullName());
         emailService.sendEmail(employee);
         return responseHelper.setResponseEntity(TOMConstants.SUCCESS, TOMConstants.EMPTY_STRING, leave.getId());
@@ -155,7 +163,7 @@ public class LeaveServiceImpl implements LeaveService {
             return leaveConfig.getMapping().get(LeaveType.MC.name().toLowerCase());
         }
         return 0;
+
+
     }
-
-
 }
