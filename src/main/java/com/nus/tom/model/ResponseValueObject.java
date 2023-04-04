@@ -12,7 +12,7 @@ import java.util.UUID;
 @Builder
 public class ResponseValueObject implements Serializable {
 
-   private String id;
+   private String payload;
    private String message;
    private ErrorObject errors;
 }

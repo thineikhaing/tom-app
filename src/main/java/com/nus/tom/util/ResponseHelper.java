@@ -11,9 +11,9 @@ import java.util.UUID;
 
 @Component
 public class ResponseHelper {
-    public ResponseEntity<ResponseValueObject> setResponseEntity(String message, String errorMsg, String id) {
+    public ResponseEntity<ResponseValueObject> setResponseEntity(String message, String errorMsg, String payload) {
         ResponseValueObject responseValueObj = ResponseValueObject.builder()
-                .message(message).id(id).build();
+                .message(message).payload(payload).build();
 
         if (!StringUtils.isEmpty(errorMsg)) {
             responseValueObj.setErrors((ErrorObject.builder().errorMsg(errorMsg).build()));
