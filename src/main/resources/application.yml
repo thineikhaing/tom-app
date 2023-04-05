@@ -76,6 +76,9 @@ leave:
 user:
   activateUrl: http://localhost:8080/updatePasswordPage/
 
+recommend:
+  policy: "project.priority < 3"
+
 ---
 spring:
   mail:
@@ -142,3 +145,6 @@ leave:
 
 user:
   activateUrl: http://localhost:8080/updatePasswordPage/
+
+recommend:
+  policy: "project.priority < 3"
