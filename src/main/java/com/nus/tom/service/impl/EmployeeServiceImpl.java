@@ -111,9 +111,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         existingEmployee.setContactNumber(employee.getContactNumber());
         existingEmployee.setLeaveBalance(employee.getLeaveBalance());
         existingEmployee.setDateOfBirth(employee.getDateOfBirth());
-        existingEmployee.setEmployment_startDate(employee.getEmployment_startDate());
-        existingEmployee.setEmployment_endDate(employee.getEmployment_endDate());
+        existingEmployee.setEmploymentStartDate(employee.getEmploymentStartDate());
+        existingEmployee.setEmploymentEndDate(employee.getEmploymentEndDate());
         existingEmployee.setDepartment(department);
+
+        employeeRepository.save(existingEmployee);
+
+        User existinguser = userRepository.findById(existingEmployee.getUser().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        existinguser.setEmail(employee.getEmail());
+        userRepository.save(existinguser);
+        log.info("Employee User email", existinguser.getEmail());
+        existingEmployee.setUser(existinguser);;
+
         return employeeRepository.save(existingEmployee);
     }
 
@@ -127,5 +137,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    @Override
+    public List<Employee> getEmployeesByDepartmentID(String id) {
+        return employeeRepository.findByDepartmentId(id);
+    }
 
 }

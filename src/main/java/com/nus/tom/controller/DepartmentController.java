@@ -1,15 +1,21 @@
 package com.nus.tom.controller;
 
 import com.nus.tom.dtos.DepartmentDTO;
-import com.nus.tom.mappers.DepartmentMapper;
 import com.nus.tom.model.Department;
+import com.nus.tom.model.Employee;
+import com.nus.tom.repository.DepartmentRepository;
+import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.service.DepartmentService;
 import com.nus.tom.service.EmployeeService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,49 +27,101 @@ public class DepartmentController {
     @Autowired
     private final EmployeeService employeeService;
 
-    private final DepartmentMapper departmentMapper;
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
-    public DepartmentController(DepartmentService departmentService, EmployeeService employeeService, DepartmentMapper departmentMapper) {
+    //    private final DepartmentMapper departmentMapper;
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public DepartmentController(DepartmentService departmentService, EmployeeService employeeService) {
         this.departmentService = departmentService;
         this.employeeService = employeeService;
-        this.departmentMapper = departmentMapper;
     }
 
     @GetMapping("")
-    public ResponseEntity<List<DepartmentDTO>> getAllDepartments() {
+    public List<DepartmentDTO> getAllDepartments() {
         List<Department> departments = departmentService.getAllDepartments();
         List<DepartmentDTO> departmentDTOs = departments.stream()
-                .map(department -> departmentMapper.toDepartmentDTO(department))
+                .map(DepartmentDTO::fromDepartment)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(departmentDTOs);
+        return departmentDTOs;
     }
+
 
     @GetMapping("/{id}")
-    public Department getDepartmentById(@PathVariable("id") String id) {
-        return departmentService.getDepartmentById(id);
+    public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable String id) {
+
+        Department department = departmentService.getDepartmentById(id);
+
+        // convert entity to DTO
+        DepartmentDTO departmentResponse = DepartmentDTO.fromDepartment(department);
+
+        return ResponseEntity.ok().body(departmentResponse);
     }
 
+
     @PostMapping("")
-    public Department createDepartment(@RequestBody Department department) {
-        return departmentService.createDepartment(department);
+    public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody DepartmentDTO departmentDTO) {
+
+        // convert DTO to entity
+        Department departmentRequest = modelMapper.map(departmentDTO, Department.class);
+        Department department = departmentService.createDepartment(departmentRequest);
+        // convert entity to DTO
+        DepartmentDTO departmentResponse = DepartmentDTO.fromDepartment(department);
+        return new ResponseEntity<DepartmentDTO>(departmentResponse, HttpStatus.CREATED);
+
     }
 
     @PutMapping("/{id}")
-    public Department updateDepartment(@PathVariable("id") String id, @RequestBody Department department) {
-        return departmentService.updateDepartment(id, department);
+    public ResponseEntity<DepartmentDTO> updateDepartment(@PathVariable("id") String id, @RequestBody DepartmentDTO departmentDTO) {
+
+        // convert DTO to Entity
+        Department departmentRequest = DepartmentDTO.toDepartment(departmentDTO);
+
+        Department department = departmentService.updateDepartment(id, departmentRequest);
+
+        // entity to DTO
+        DepartmentDTO departmentResponse = DepartmentDTO.fromDepartment(department);//modelMapper.map(department, DepartmentDTO.class);
+
+        return ResponseEntity.ok().body(departmentResponse);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDepartment(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deleteDepartment(@PathVariable("id") String id) {
         departmentService.deleteDepartment(id);
+        return ResponseEntity.noContent().build();
     }
 
-    // POST mapping to assign department head
-//    @PostMapping("/{departmentId}/assignHead")
-//    public ResponseEntity<?> assignDepartmentHead(@PathVariable(value = "departmentId") String departmentId, @RequestBody Employee employee) {
-//        Department department = departmentService.assignDepartmentHead(departmentId, employee);
-//        return new ResponseEntity<>(department, HttpStatus.OK);
-//    }
+    //     POST mapping to assign department head
+    @PostMapping("/assign-department-head")
+//public ResponseEntity<String> assignDepartmentHead(@RequestParam String employeeId, @RequestParam String departmentId) {
+    public ResponseEntity<DepartmentDTO> assignDepartmentHead(@RequestBody Map<String, String> body) {
+        String departmentId = body.get("departmentId");
+        String employeeId = body.get("employeeId");
+        DepartmentDTO departmentDTO = new DepartmentDTO();
+
+        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+        if (employeeOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(departmentDTO);
+        }
+
+        Optional<Department> departmentOptional = departmentRepository.findById(departmentId);
+        if (departmentOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(departmentDTO);
+        }
+
+        Employee employee = employeeOptional.get();
+        Department department = departmentOptional.get();
+
+        department.setDepartmentHead(employee);
+        departmentRepository.save(department);
+
+
+        return ResponseEntity.ok(DepartmentDTO.fromDepartment(department));
+    }
 
 
 }

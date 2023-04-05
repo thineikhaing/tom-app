@@ -47,10 +47,10 @@ public class Employee extends AuditableEntity implements Serializable {
     private Date dateOfBirth;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date employment_startDate;
+    private Date employmentStartDate;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date employment_endDate;
+    private Date employmentEndDate;
 
     @ManyToOne
     @JoinColumn(name = "project_id")
