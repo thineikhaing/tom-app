@@ -31,4 +31,7 @@ public class Project extends AuditableEntity implements Serializable {
     @OneToMany(mappedBy = "project")
     private Set<Employee> employees;
 
+    @Column
+    private int priority;
+
 }

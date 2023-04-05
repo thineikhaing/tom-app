@@ -3,6 +3,7 @@ package com.nus.tom.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.mvel2.CompileException;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -19,5 +20,8 @@ public class LeaveRecommendation extends AuditableEntity implements Serializable
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     private String id;
+
+
+    private boolean fullWorkLoad;
 
 }
