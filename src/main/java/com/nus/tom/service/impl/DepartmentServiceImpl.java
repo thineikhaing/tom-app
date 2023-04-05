@@ -6,6 +6,7 @@ import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.service.DepartmentService;
 import com.nus.tom.util.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
@@ -15,19 +16,16 @@ import java.util.Optional;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
     private final EmployeeRepository employeeRepository;
 
-    public DepartmentServiceImpl(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
-
     @Override
     public List<Department> getAllDepartments() {
+        log.info("Get ALl Department {}",departmentRepository.findAll().size());
         return departmentRepository.findAll();
     }
 
@@ -35,6 +33,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public Department getDepartmentById(String id) {
         Optional<Department> department = departmentRepository.findById(id);
         if (department.isPresent()) {
+            log.info("Get Department - {}",department.get().getName());
             return department.get();
         } else {
             throw new ResourceNotFoundException("Department", "id", id);
@@ -43,7 +42,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department createDepartment(Department department) {
-        return departmentRepository.save(department);
+        Department newDepartment = departmentRepository.save(department);
+        log.info("Created Department - {}",newDepartment.getName());
+        return newDepartment;
     }
 
     @Override
@@ -61,6 +62,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             if (optionalEmployee.isPresent()) {
                 Employee departmentHead = optionalEmployee.get();
                 existingDepartment.setDepartmentHead(departmentHead);
+                log.info("DepartmentHead - {}",departmentHead.getFullName());
             } else {
                 throw new ResourceNotFoundException("Employee", "id", department.getDepartmentHead().getId());
             }
@@ -74,6 +76,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void deleteDepartment(String id) {
         Optional<Department> department = departmentRepository.findById(id);
         if (department.isPresent()) {
+            log.info("Department to delete - {}",department.get().getName());
             departmentRepository.deleteById(id);
         } else {
             throw new ResourceNotFoundException("Department", "id", id);
@@ -82,18 +85,18 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 
     @Override
-    public Department assignDepartmentHead(String departmentId, Employee employee){
+    public Department assignDepartmentHead(String departmentId, String employeeId){
 
         Department department = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", departmentId));
 
-        Employee assignEmployee = employeeRepository.findById(employee.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employee.getId()));
+        Employee assignEmployee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
 
         department.setDepartmentHead(assignEmployee);
         departmentRepository.save(department);
-
-        return null;
+        log.info("Department Head assigned - {}",department.getDepartmentHead().getFullName());
+        return department;
     }
 
 

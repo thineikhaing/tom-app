@@ -8,11 +8,13 @@ import com.nus.tom.model.*;
 import com.nus.tom.model.enums.ERole;
 import com.nus.tom.service.impl.EmailService;
 import com.nus.tom.service.impl.EmployeeServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.*;
 
 import com.nus.tom.repository.DepartmentRepository;
@@ -21,8 +23,8 @@ import com.nus.tom.repository.RoleRepository;
 import com.nus.tom.repository.UserRepository;
 import com.nus.tom.util.ResponseHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ActiveProfiles;
-
+@Slf4j
+@ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EmployeeServiceImpTest {
 

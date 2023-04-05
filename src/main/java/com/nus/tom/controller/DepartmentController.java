@@ -97,29 +97,31 @@ public class DepartmentController {
 
     //     POST mapping to assign department head
     @PostMapping("/assign-department-head")
-//public ResponseEntity<String> assignDepartmentHead(@RequestParam String employeeId, @RequestParam String departmentId) {
     public ResponseEntity<DepartmentDTO> assignDepartmentHead(@RequestBody Map<String, String> body) {
         String departmentId = body.get("departmentId");
         String employeeId = body.get("employeeId");
-        DepartmentDTO departmentDTO = new DepartmentDTO();
 
-        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
-        if (employeeOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(departmentDTO);
-        }
+        Department department = departmentService.assignDepartmentHead(departmentId, employeeId);
 
-        Optional<Department> departmentOptional = departmentRepository.findById(departmentId);
-        if (departmentOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(departmentDTO);
-        }
-
-        Employee employee = employeeOptional.get();
-        Department department = departmentOptional.get();
-
-        department.setDepartmentHead(employee);
-        departmentRepository.save(department);
-
-
+//        DepartmentDTO departmentDTO = new DepartmentDTO();
+//
+//        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+//        if (employeeOptional.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(departmentDTO);
+//        }
+//
+//        Optional<Department> departmentOptional = departmentRepository.findById(departmentId);
+//        if (departmentOptional.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(departmentDTO);
+//        }
+//
+//        Employee employee = employeeOptional.get();
+//        Department department = departmentOptional.get();
+//
+//        department.setDepartmentHead(employee);
+//        departmentRepository.save(department);
+//
+//
         return ResponseEntity.ok(DepartmentDTO.fromDepartment(department));
     }
 
