@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "d5ca0c85-8398-4568-b20b-9fd4f2b8a476",
 		"name": "javaJwt",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "359079"
 	},
 	"item": [
@@ -26,19 +26,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/auth/signup",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"auth",
-						"signup"
-					]
-				}
+				"url": "http://localhost:8080/api/auth/signup"
 			},
 			"response": []
 		},
@@ -96,19 +84,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/api/main/all",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"main",
-						"all"
-					]
-				}
+				"url": "http://localhost:8080/api/main/all"
 			},
 			"response": []
 		},
@@ -123,18 +99,7 @@
 						"type": "text"
 					}
 				],
-				"url": {
-					"raw": "localhost:8080/api/main/user",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"main",
-						"user"
-					]
-				}
+				"url": "localhost:8080/api/main/user"
 			},
 			"response": []
 		},
@@ -149,18 +114,7 @@
 						"type": "text"
 					}
 				],
-				"url": {
-					"raw": "localhost:8080/api/main/admin",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"main",
-						"admin"
-					]
-				}
+				"url": "localhost:8080/api/main/admin"
 			},
 			"response": []
 		},
@@ -175,18 +129,7 @@
 						"type": "text"
 					}
 				],
-				"url": {
-					"raw": "localhost:8080/api/main/manager",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"main",
-						"manager"
-					]
-				}
+				"url": "localhost:8080/api/main/manager"
 			},
 			"response": []
 		},
@@ -201,15 +144,52 @@
 						"type": "text"
 					}
 				],
+				"url": "localhost:8080/api/departments"
+			},
+			"response": []
+		},
+		{
+			"name": "assign_department_head",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwNTk4MzIyLCJleHAiOjE2ODA2ODQ3MjJ9.Aih_hBduc3EC5WSzepAdnvwts5mxrMz3NfQ-8gi-itJq-zRuKTDBkC_SsMc2bV3N7QN2DCmAtJ7RJdn0sWf-gw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"employeeId\": \"f254b505-87d5-4a36-bd82-4e218311d263\",\n \"departmentId\": \"db9f80be-3d8b-4cc6-838b-e42d96a13541\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:8080/api/departments",
+					"raw": "localhost:8080/api/departments/assign-department-head",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"api",
-						"departments"
+						"departments",
+						"assign-department-head"
+					],
+					"query": [
+						{
+							"key": "employeeId",
+							"value": "dc643faa-4111-4b70-bec9-371e99d68080",
+							"disabled": true
+						},
+						{
+							"key": "departmentId",
+							"value": "1455e60f-1fc1-4244-a21c-e03a36121ad6",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -222,13 +202,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjc5OTk4MDkxLCJleHAiOjE2ODAwODQ0OTF9.hz10cEAohCh1IHnuc1Y0bAZnBpC64gMIShRyJIcTCwU92dSQ8WQ5IutBpbeawh4OT5lOx5QU35dQDW5PAOWTvw",
+						"value": "Bearer Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjc5MjQyMjUyLCJleHAiOjE2NzkzMjg2NTJ9.tUfWcLmQmXa-DJirFTIexTphjcPCc8om2DsHM_AmpgjJJUyR2Mib1h5AMbvMtCiqaj0qVOKPcR6dTR8Q_NRplg",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \n    \"name\": \"Human Resources\",\n    \"details\": \"Human Resources Department.\"\n}",
+					"raw": "{    \n    \"name\": \"Cleaning\",\n    \"details\": \"Cleaning Department.\",\n    \"departHeadId\": \"\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -274,61 +254,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \n    \"name\": \"Sales and Marketing\",\n    \"details\": \"Sales and Marketing Department .\"\n}",
+					"raw": "{    \n        \"name\": \"Software Development\",\n        \"departHeadId\": \"2b832515-0927-4d56-82af-1ca58f69fbeb\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "localhost:8080/api/departments/a7521f1e-b62b-4cd4-9db3-504771b9753f",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"departments",
-						"a7521f1e-b62b-4cd4-9db3-504771b9753f"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "assign_department_head",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{tom_api_token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{    \n    \"id\": \"be4f3a98-04db-4151-8452-6a051d89b818\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/api/departments/f69ca5fe-a717-4f5b-a60a-c5d697694609/assignHead",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"departments",
-						"f69ca5fe-a717-4f5b-a60a-c5d697694609",
-						"assignHead"
-					]
-				}
+				"url": "localhost:8080/api/departments/d14842fc-d681-485d-bef6-5d731d2e5265"
 			},
 			"response": []
 		},
@@ -355,18 +288,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "localhost:8080/api/departments/1d4df1e2-5789-4fef-bd00-46b65682c9d9",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"departments",
-						"1d4df1e2-5789-4fef-bd00-46b65682c9d9"
-					]
-				}
+				"url": "localhost:8080/api/departments/1d4df1e2-5789-4fef-bd00-46b65682c9d9"
 			},
 			"response": []
 		},
@@ -390,18 +312,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "localhost:8080/api/departments/18d2cc8f-28f5-44af-8ad2-40d161087060",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"departments",
-						"18d2cc8f-28f5-44af-8ad2-40d161087060"
-					]
-				}
+				"url": "localhost:8080/api/departments/18d2cc8f-28f5-44af-8ad2-40d161087060"
 			},
 			"response": []
 		},
@@ -428,18 +339,34 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/employees",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"employees"
-					]
-				}
+				"url": "http://localhost:8080/api/employees"
+			},
+			"response": []
+		},
+		{
+			"name": "get_employees_by_departmentId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwMTA2Nzk2LCJleHAiOjE2ODAxOTMxOTZ9.Mad-61vUjZCr6RyajBaQvLV3VafEwmz9CagNRp2eXZsAczuo7B-_A6C-dplcXbkjaA0P28FRQnZuWN5g1la0pQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/employees/department/7247957d-e4a2-4435-b328-6562b3bbc8b3"
 			},
 			"response": []
 		},
@@ -450,31 +377,20 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "{{tom_api_token}}",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwNjE3MDc4LCJleHAiOjE2ODA3MDM0Nzh9.lqpZmg4yOdw_5r_hUIQstDhoVaDdK2sx0_W9BxzJDMrmeC_7ZbLLsD7f-WspEK1RGtdT3xcM9_3G7CHVx0ONPQ",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"fullName\": \"Employee1\",\n    \"email\": \"emp1@example.com\",\n    \"address\": \"123 Main St\",\n    \"contactNumber\": \"555-1234\",\n    \"leaveBalance\": 20,\n    \"dateOfBirth\": \"1990-01-01\",\n    \"employment_startDate\": \"2022-01-01\",\n    \"employment_endDate\": null,\n    \"department\": {\n        \"id\": \"b64b12c8-7537-4655-a109-cfb729e7dbd0\",\n        \"name\": \"Software Development\"\n    }\n}",
+					"raw": "{\n    \"fullName\": \"itemp3\",\n    \"email\": \"itemp3@example.com\",\n    \"address\": \"123 Main St\",\n    \"contactNumber\": \"555-1234\",\n    \"leaveBalance\": 20,\n    \"dateOfBirth\": \"1990-01-01\",\n    \"employmentStartDate\": \"2022-01-01\",\n    \"employmentEndDate\": null,\n    \"departmentId\": \"7247957d-e4a2-4435-b328-6562b3bbc8b3\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/employees",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"employees"
-					]
-				}
+				"url": "http://localhost:8080/api/employees"
 			},
 			"response": []
 		},
@@ -485,32 +401,20 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwMTA2Nzk2LCJleHAiOjE2ODAxOTMxOTZ9.Mad-61vUjZCr6RyajBaQvLV3VafEwmz9CagNRp2eXZsAczuo7B-_A6C-dplcXbkjaA0P28FRQnZuWN5g1la0pQ",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwNjA1NDk4LCJleHAiOjE2ODA2OTE4OTh9.O8T4ywOESRUaYut8iUH4uQqVkSiRj4LQwE09yZPPgodEMJP-_6AxQmF8xX4RCSNgtUWxsunfqKpLfj2uKP98uQ",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"fullName\": \"grace mg\",\n    \"email\": \"grace@example.com\",\n    \"address\": \"321 Main St\",\n    \"contactNumber\": \"555-1234\",\n    \"leaveBalance\": 20,\n    \"dateOfBirth\": \"1990-01-01\",\n    \"employment_startDate\": \"2022-01-01\",\n    \"employment_endDate\": null,\n    \"department\": {\n        \"id\": \"763cb070-39f5-4182-a750-727251b83300\",\n        \"name\": \"Human Resources\"\n    }\n}",
+					"raw": "{\n    \"fullName\": \"seemp3_edit\",\n    \"email\": \"seemp3@example.com\",\n    \"address\": \"123 Main St\",\n    \"contactNumber\": \"555-1234\",\n    \"leaveBalance\": 20,\n    \"dateOfBirth\": \"1990-01-01\",\n    \"employmentStartDate\": \"2022-01-01\",\n    \"employmentEndDate\": null,\n    \"departmentId\": \"d14842fc-d681-485d-bef6-5d731d2e5265\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/employees/3c465e83-f473-42eb-a3ca-dfd42f063f5b",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"employees",
-						"3c465e83-f473-42eb-a3ca-dfd42f063f5b"
-					]
-				}
+				"url": "http://localhost:8080/api/employees/c01210ca-821d-4880-b116-ff275aa11748"
 			},
 			"response": []
 		},
@@ -537,19 +441,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/employees/12c9fdec-3c4d-45b5-8e4d-f8a765e20586",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"employees",
-						"12c9fdec-3c4d-45b5-8e4d-f8a765e20586"
-					]
-				}
+				"url": "http://localhost:8080/api/employees/c01210ca-821d-4880-b116-ff275aa11748"
 			},
 			"response": []
 		},
@@ -573,19 +465,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/employees/12c9fdec-3c4d-45b5-8e4d-f8a765e20586",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"employees",
-						"12c9fdec-3c4d-45b5-8e4d-f8a765e20586"
-					]
-				}
+				"url": "http://localhost:8080/api/employees/12c9fdec-3c4d-45b5-8e4d-f8a765e20586"
 			},
 			"response": []
 		}

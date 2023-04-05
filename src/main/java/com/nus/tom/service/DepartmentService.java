@@ -12,9 +12,12 @@ public interface DepartmentService {
 
     Department createDepartment(Department department);
 
+//    Department updateDepartment(String id, Department department);
+
     Department updateDepartment(String id, Department department);
 
     void deleteDepartment(String id);
 
-//    Department assignDepartmentHead(String departmentId, Employee employee);
+    Department assignDepartmentHead(String departmentId, Employee employee);
 }
+

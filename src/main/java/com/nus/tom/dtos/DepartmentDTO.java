@@ -1,31 +1,49 @@
 package com.nus.tom.dtos;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.nus.tom.model.Department;
+import com.nus.tom.model.Employee;
+import lombok.*;
 
 import java.util.Set;
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 //DepartmentResponse class that represents the response body for Department operations
 public class DepartmentDTO {
-
     private String id;
-
     private String name;
-
-//    private EmployeeDTO departmentHead;
-
-    private Set<EmployeeDTO> employees;
-
+    private String departHeadId;
+    private String departHeadFullName;
     private String details;
 
-    public DepartmentDTO() {}
+    public static DepartmentDTO fromDepartment(Department department) {
+        Employee departmentHead = department.getDepartmentHead();
+        return DepartmentDTO.builder()
+                .id(department.getId())
+                .name(department.getName())
+                .details(department.getDetails())
+                .departHeadId(departmentHead != null ? departmentHead.getId() : null)
+                .departHeadFullName(departmentHead != null ? departmentHead.getFullName() : null)
+                .build();
+    }
 
-    public DepartmentDTO(String id, String name, Set<EmployeeDTO> employees, String details) {
-        this.id = id;
-        this.name = name;
-        this.employees = employees;
-        this.details = details;
+    public static Department toDepartment(DepartmentDTO departmentDTO) {
+        Department department = new Department();
+        department.setId(departmentDTO.getId());
+        department.setName(departmentDTO.getName());
+
+        if (departmentDTO.getDepartHeadId() != null) {
+            Employee departmentHead = new Employee();
+            departmentHead.setId(departmentDTO.getDepartHeadId());
+            departmentHead.setFullName(departmentDTO.getDepartHeadFullName());
+            department.setDepartmentHead(departmentHead);
+        }
+
+        department.setDetails(departmentDTO.getDetails());
+
+        return department;
     }
 
 }
+
