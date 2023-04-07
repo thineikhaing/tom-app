@@ -7,9 +7,10 @@
     <title>Spring Boot Email using FreeMarker</title>
 </head>
 <body>
+<div style="color:red"><i>THIS IS A SYSTEM GENERATED EMAIL. PLEASE DO NOT REPLY.</i></div>
 <div style="margin-top: 10px">Greetings, ${fullName}</div>
-<div>Your leave is <b>${status}</b></div>
+<div>Your leave is <b>${status} </b></óiv>
+<div>Reason of Approval/Rejection: ${reason}</div>
 <br/>
-<div> This is a system generated email. Please do not reply.</div>
 </body>
 </html>

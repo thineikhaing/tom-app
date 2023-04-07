@@ -14,10 +14,14 @@ public class TOMConstants {
     public static final String FULL_NAME = "fullName";
     public static final String STATUS = "status";
 
+    public static final String MANAGER_NAME = "managerName";
+
     public static final String LINK = "link";
 
-    public static final String REGISTRATION = "Employee Registration";
-    public static final String LEAVE_REPLY = "Leave Application";
+    public static final String REASON = "reason";
+
+    public static final String REGISTRATION = "[TOM] Employee Registration";
+    public static final String LEAVE_REPLY = "[TOM] Leave Application";
 
     public static final String CONTENT_TYPE = "text/html; charset=utf-8";
 
@@ -26,5 +30,6 @@ public class TOMConstants {
     public static final String ACTIVATED = "ACTIVATED";
 
     public static final String EMPLOYEE_FTL = "employeeRegister.ftl";
-
+    public static final String LEAVE_FTL = "leaveApprovalTemplate.ftl";
+    public static final String LEAVE_SUBMIT_FTL = "leaveSubmitTemplate.ftl";
 }

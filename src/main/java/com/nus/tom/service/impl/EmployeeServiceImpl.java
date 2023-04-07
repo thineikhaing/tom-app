@@ -3,24 +3,27 @@ package com.nus.tom.service.impl;
 
 import com.nus.tom.model.*;
 import com.nus.tom.model.enums.ERole;
+import com.nus.tom.model.enums.EmailStrategy;
 import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.repository.RoleRepository;
 import com.nus.tom.repository.UserRepository;
+import com.nus.tom.service.EmailBuilder;
 import com.nus.tom.service.EmployeeService;
 import com.nus.tom.util.ResourceNotFoundException;
 import com.nus.tom.util.ResponseHelper;
 import com.nus.tom.util.TOMConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+
+import static com.nus.tom.util.TOMConstants.EMPLOYEE_FTL;
+import static com.nus.tom.util.TOMConstants.REGISTRATION;
 
 @Slf4j
 @Service
@@ -34,16 +37,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder encoder;
-
     private final EmailService emailService;
 
+    @Value("${user.activateUrl}")
+    private String activateUrl;
 
     @Override
     public ResponseEntity<ResponseValueObject> save(Employee employee) {
         try {
             log.info("Save employee {}", employee.getFullName());
-            employeeRepository.save(employee);
-            emailService.sendEmail(employee);
+            //test method only
             return responseHelper.setResponseEntity(TOMConstants.SUCCESS, TOMConstants.EMPTY_STRING, employee.getId());
         } catch (Exception ex) {
             log.error("Exception in saving employee {}", ex.getStackTrace());
@@ -55,7 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        List<Employee> employees= employeeRepository.findAll();
+        List<Employee> employees = employeeRepository.findAll();
         log.info("Total number of employees: {}", employees.size());
         return employees;
     }
@@ -91,14 +94,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         User newUser = userRepository.save(user);
         employee.setUser(newUser);
 
-        log.info("Employee's department: {}",department.getName());
+        log.info("Employee's department: {}", department.getName());
         log.info("Employee's user account: {}", newUser.getUsername());
         log.info("Employee account: {}", employee.getEmail());
 
-        emailService.sendEmail(employee);
+        invokeEmail(employee);
 
         return employeeRepository.save(employee);
     }
+
     @Override
     public Employee updateEmployee(String id, Employee employee) {
         Employee existingEmployee = employeeRepository.findById(id)
@@ -143,6 +147,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> employees = employeeRepository.findByDepartmentId(id);
         log.info("Get Employees By Department ID {}", employees.size());
         return employees;
+    }
+
+    /**
+     * build email strategy and invoke
+     *
+     * @param employee
+     */
+    private void invokeEmail(Employee employee) {
+        NotificationEvent notificationEvent = buildNotificationEvent(employee);
+        emailService.invoke(notificationEvent);
+    }
+
+    private NotificationEvent buildNotificationEvent(Employee employee) {
+        Set<String> recipients = new HashSet<>();
+        recipients.add(employee.getEmail());
+        return NotificationEvent.builder().employee(employee).subject(REGISTRATION).recipients(recipients).template(EMPLOYEE_FTL).type(EmailStrategy.REGISTRATION.type).activateUrl(activateUrl).build();
     }
 
 }
