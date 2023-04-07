@@ -13,7 +13,6 @@ import com.nus.tom.util.ResponseHelper;
 import com.nus.tom.util.TOMConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,12 +31,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final ResponseHelper responseHelper;
 
 
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
-    @Autowired
-    PasswordEncoder encoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder encoder;
 
     private final EmailService emailService;
 
@@ -59,13 +55,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+        List<Employee> employees= employeeRepository.findAll();
+        log.info("Total number of employees: {}", employees.size());
+        return employees;
     }
 
     @Override
     public Employee getEmployeeById(String id) {
         Optional<Employee> employee = employeeRepository.findById(id);
         if (employee.isPresent()) {
+            log.info("Get Employee: {}", employee.get().getFullName());
             return employee.get();
         } else {
             throw new ResourceNotFoundException("Employee", "id", id);
@@ -89,22 +88,25 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
         roles.add(userRole);
         user.setRoles(roles);
-        userRepository.save(user);
+        User newUser = userRepository.save(user);
+        employee.setUser(newUser);
 
-        User newuser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found", "id", user.getId()));
+        log.info("Employee's department: {}",department.getName());
+        log.info("Employee's user account: {}", newUser.getUsername());
+        log.info("Employee account: {}", employee.getEmail());
 
-        employee.setUser(newuser);
+        emailService.sendEmail(employee);
 
         return employeeRepository.save(employee);
     }
-
     @Override
     public Employee updateEmployee(String id, Employee employee) {
         Employee existingEmployee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id));
+
         Department department = departmentRepository.findById(employee.getDepartment().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
+
         existingEmployee.setFullName(employee.getFullName());
         existingEmployee.setEmail(employee.getEmail());
         existingEmployee.setAddress(employee.getAddress());
@@ -115,14 +117,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         existingEmployee.setEmploymentEndDate(employee.getEmploymentEndDate());
         existingEmployee.setDepartment(department);
 
-        employeeRepository.save(existingEmployee);
+        User exUser = existingEmployee.getUser();
+        exUser.setEmail(employee.getEmail());
+        User updatedUser = userRepository.save(exUser);
+        existingEmployee.setUser(updatedUser);
 
-        User existinguser = userRepository.findById(existingEmployee.getUser().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-        existinguser.setEmail(employee.getEmail());
-        userRepository.save(existinguser);
-        log.info("Employee User email", existinguser.getEmail());
-        existingEmployee.setUser(existinguser);;
+        log.info("Updated Employee User email {}", existingEmployee.getUser().getEmail());
 
         return employeeRepository.save(existingEmployee);
     }
@@ -131,6 +131,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployee(String id) {
         Optional<Employee> employee = employeeRepository.findById(id);
         if (employee.isPresent()) {
+            log.info("Deleted Department ID {}", employee.get().getId());
             employeeRepository.deleteById(id);
         } else {
             throw new ResourceNotFoundException("Employee", "id", id);
@@ -139,7 +140,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getEmployeesByDepartmentID(String id) {
-        return employeeRepository.findByDepartmentId(id);
+        List<Employee> employees = employeeRepository.findByDepartmentId(id);
+        log.info("Get Employees By Department ID {}", employees.size());
+        return employees;
     }
 
 }

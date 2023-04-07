@@ -64,4 +64,7 @@ public class Employee extends AuditableEntity implements Serializable {
     @Email
     private String email;
 
+    public Employee(String john, String doe, String s) {
+        super();
+    }
 }

@@ -18,6 +18,6 @@ public interface DepartmentService {
 
     void deleteDepartment(String id);
 
-    Department assignDepartmentHead(String departmentId, Employee employee);
+    Department assignDepartmentHead(String departmentId, String employeeId);
 }
 
