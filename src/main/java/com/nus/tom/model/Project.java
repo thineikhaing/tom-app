@@ -1,9 +1,7 @@
 package com.nus.tom.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
@@ -11,6 +9,8 @@ import java.time.Instant;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Data
 @Entity

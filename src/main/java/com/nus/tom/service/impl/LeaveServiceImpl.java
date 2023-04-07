@@ -36,7 +36,7 @@ public class LeaveServiceImpl implements LeaveService {
 
     private final LeaveConfig leaveConfig;
 
-    private final EmailService emailService;
+    private final EmailTemplateService emailService;
 
     private final JsonHandler jsonHandler;
 
@@ -86,7 +86,7 @@ public class LeaveServiceImpl implements LeaveService {
      * @param leave
      * @return
      */
-        private ResponseEntity<ResponseValueObject> checkAndSave(Leave leave) {
+    private ResponseEntity<ResponseValueObject> checkAndSave(Leave leave) {
         Employee employee = employeeRepository.findById(leave.getEmployee().getId()).orElse(null);
 
         if (Objects.isNull(employee))
@@ -102,7 +102,7 @@ public class LeaveServiceImpl implements LeaveService {
         leaveRepository.save(leave);
         log.info("saved leave for {}", leave.getEmployee().getId());
         log.info("sending email {}", employee.getFullName());
-        emailService.sendEmail(employee);
+        /*Add Email Builder*/
         return responseHelper.setResponseEntity(TOMConstants.SUCCESS, TOMConstants.EMPTY_STRING, leave.getId());
     }
 

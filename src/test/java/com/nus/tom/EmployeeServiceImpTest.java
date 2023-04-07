@@ -6,6 +6,9 @@ import static org.mockito.Mockito.*;
 import java.util.*;
 import com.nus.tom.model.*;
 import com.nus.tom.model.enums.ERole;
+import com.nus.tom.model.enums.EmailStrategy;
+import com.nus.tom.service.EmailBuilder;
+import com.nus.tom.service.impl.EmailSender;
 import com.nus.tom.service.impl.EmailService;
 import com.nus.tom.service.impl.EmployeeServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +45,6 @@ public class EmployeeServiceImpTest {
 
     @Mock
     private PasswordEncoder encoder;
-
     @Mock
     private EmailService emailService;
 
@@ -159,7 +161,10 @@ public class EmployeeServiceImpTest {
         verify(encoder).encode("password");
         verify(userRepository).save(any(User.class));
         verify(employeeRepository).save(any(Employee.class));
-        verify(emailService).sendEmail(employee);
+
+        NotificationEvent notificationEvent = getNotification();
+        notificationEvent.setEmployee(employee);
+        verify(emailService).invoke(getNotification());
 
         Assertions.assertEquals(result, employee);
         Assertions.assertEquals(result.getUser().getId(), user.getId());
@@ -254,6 +259,8 @@ public class EmployeeServiceImpTest {
         assertNotNull(employees);
         assertTrue(employees.isEmpty());
     }
-
+    private NotificationEvent getNotification() {
+        return NotificationEvent.builder().build();
+    }
 
 }

@@ -48,8 +48,8 @@ public class LeaveRecommendationServiceImpl implements LeaveRecommendationServic
         List<LeavePolicy> leavePoliciesOkay = Optional.ofNullable(analysed.get(Boolean.TRUE)).orElse(new ArrayList<>());
         List<LeavePolicy> leavePoliciesNotOkay = Optional.ofNullable(analysed.get(Boolean.FALSE)).orElse(new ArrayList<>());
 
-        log.info("Leave Policies Okay {}", leavePoliciesOkay);
-        log.info("Leave Policies Not Okay {}", leavePoliciesNotOkay);
+        log.info("After analyzed, Leave Policies Okay {}", leavePoliciesOkay);
+        log.info("After analyzed, Leave Policies Not Okay {}", leavePoliciesNotOkay);
 
         if (leavePoliciesOkay.isEmpty())
             return false;
