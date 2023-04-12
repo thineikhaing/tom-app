@@ -13,13 +13,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgwODU5NzMwLCJleHAiOjE2ODA5NDYxMzB9.yIGXWomfIHTYEEJm7JZfEqcvLgQK9G4E5nm_vBJBkM_CftkuXIaNX4l8aT8DwHx3S_dBZVoMg57UJ8RiuSC_hQ",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGluIiwiaWF0IjoxNjgxMjc4Njg3LCJleHAiOjE2ODEzNjUwODd9.N8AmsXXWAAaLDXfRQ62_WKzZ-rQDYcZg-oVCYVZdv2xPMhHBcAK-o5_PMJZzWXhElj20qtF9_otqt-I3AX7wgw",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \r\n    \"fullName\": \"ABCD\",\r\n    \"departHeadId\": 1\r\n    \r\n}\r\n    \r\n",
+					"raw": "{\r\n    \r\n    \"fullName\": \"ABCD\"\r\n    \r\n}\r\n    \r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -27,7 +27,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/employees/createEmployee",
+					"raw": "localhost:8080/api/employees/saveEmployee",
 					"host": [
 						"localhost"
 					],
@@ -35,7 +35,7 @@
 					"path": [
 						"api",
 						"employees",
-						"createEmployee"
+						"saveEmployee"
 					]
 				}
 			},
@@ -54,7 +54,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"leaveType\": \"Annual Leave\",\r\n    \"employee\":{\r\n        \"id\": \"\"\r\n    },\r\n    \"startDate\":\"2023-04-01T00:00:00.00Z\",\r\n    \"endDate\":\"2023-04-01T12:00:00.00Z\"\r\n\r\n}",
+					"raw": "{\r\n    \"leaveType\": \"Childcare Leave\",\r\n    \"employee\":{\r\n        \"id\": \"1\"\r\n    },\r\n    \"startDate\":\"2023-05-08T00:00:00.00Z\",\r\n    \"endDate\":\"2023-05-08T12:00:00.00Z\"\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,6 +72,70 @@
 						"tom",
 						"leave",
 						"applyLeave"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Approve Leave",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJteWEiLCJpYXQiOjE2ODAwNzYzMDYsImV4cCI6MTY4MDE2MjcwNn0.SqhqB4G5wjsgXHr7YEow3lWIwVcMQ7gQASQlRaJEU-Nmo3eVyY7DtXdKJtzoDzbAYT_TKctwnOZrk9yYA5c4Dw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"id\": \"5fc00567-9eca-4d8e-91be-c34af14bb1ec\",\r\n   \"status\": \"Approved\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/tom/leave/updateLeaveStatus",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tom",
+						"leave",
+						"updateLeaveStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Leave Balance",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJteWEiLCJpYXQiOjE2ODAwNzYzMDYsImV4cCI6MTY4MDE2MjcwNn0.SqhqB4G5wjsgXHr7YEow3lWIwVcMQ7gQASQlRaJEU-Nmo3eVyY7DtXdKJtzoDzbAYT_TKctwnOZrk9yYA5c4Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/tom/leave/getLeaveBalance/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tom",
+						"leave",
+						"getLeaveBalance",
+						"1"
 					]
 				}
 			},

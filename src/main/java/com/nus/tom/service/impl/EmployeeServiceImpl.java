@@ -8,7 +8,6 @@ import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.repository.RoleRepository;
 import com.nus.tom.repository.UserRepository;
-import com.nus.tom.service.EmailBuilder;
 import com.nus.tom.service.EmployeeService;
 import com.nus.tom.util.ResourceNotFoundException;
 import com.nus.tom.util.ResponseHelper;
@@ -20,7 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.nus.tom.util.TOMConstants.EMPLOYEE_FTL;
 import static com.nus.tom.util.TOMConstants.REGISTRATION;
@@ -115,7 +117,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         existingEmployee.setEmail(employee.getEmail());
         existingEmployee.setAddress(employee.getAddress());
         existingEmployee.setContactNumber(employee.getContactNumber());
-        existingEmployee.setLeaveBalance(employee.getLeaveBalance());
         existingEmployee.setDateOfBirth(employee.getDateOfBirth());
         existingEmployee.setEmploymentStartDate(employee.getEmploymentStartDate());
         existingEmployee.setEmploymentEndDate(employee.getEmploymentEndDate());

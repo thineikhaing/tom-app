@@ -1,10 +1,5 @@
 package com.nus.tom.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nus.tom.dtos.EmployeeDTO;
-import com.nus.tom.dtos.LeaveDTO;
-import com.nus.tom.model.Leave;
 import com.nus.tom.model.ResponseValueObject;
 import com.nus.tom.service.LeaveService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -30,8 +26,14 @@ public class LeaveController {
     }
 
     @GetMapping(path = "/getLeaveBalance/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseValueObject> getLeaveBalance(@PathVariable String employeeId) {
+    public ResponseEntity<List<Map<String, Object>>> getLeaveBalance(@PathVariable String employeeId) {
         return leaveService.getLeaveBalance(employeeId);
+    }
+
+    @PostMapping(path = "/updateLeaveStatus", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseValueObject> updateLeaveStatus(@RequestBody String leave) {
+        log.info("leave request received {} ", leave);
+        return leaveService.updateLeaveStatus(leave);
     }
 
 

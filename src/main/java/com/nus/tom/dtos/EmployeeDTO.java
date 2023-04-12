@@ -26,7 +26,6 @@ public class EmployeeDTO {
     private String fullName;
     private String address;
     private String contactNumber;
-    private float leaveBalance;
     private Date dateOfBirth;
     private Date employmentStartDate;
     private Date employmentEndDate;
@@ -50,7 +49,6 @@ public class EmployeeDTO {
                 .fullName(employee.getFullName())
                 .address(employee.getAddress())
                 .contactNumber(employee.getContactNumber())
-                .leaveBalance(employee.getLeaveBalance())
                 .email(employee.getEmail())
                 .dateOfBirth(employee.getDateOfBirth())
                 .employmentStartDate(employee.getEmploymentStartDate())
