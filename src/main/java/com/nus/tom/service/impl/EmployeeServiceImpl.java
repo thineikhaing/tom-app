@@ -41,6 +41,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final PasswordEncoder encoder;
     private final EmailService emailService;
 
+    private final LeaveUtil leaveUtil;
+
     @Value("${user.activateUrl}")
     private String activateUrl;
 
@@ -49,6 +51,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         try {
             log.info("Save employee {}", employee.getFullName());
             //test method only
+            /*Insert Eligible Leaves*/
+            employeeRepository.save(employee);
+            leaveUtil.insertEligibleLeave(employee);
             return responseHelper.setResponseEntity(TOMConstants.SUCCESS, TOMConstants.EMPTY_STRING, employee.getId());
         } catch (Exception ex) {
             log.error("Exception in saving employee {}", ex.getStackTrace());
@@ -101,6 +106,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.info("Employee account: {}", employee.getEmail());
 
         invokeEmail(employee);
+
+        leaveUtil.insertEligibleLeave(employee);
 
         return employeeRepository.save(employee);
     }
