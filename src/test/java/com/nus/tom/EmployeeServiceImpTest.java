@@ -130,7 +130,7 @@ public class EmployeeServiceImpTest {
         employee.setEmail("john.doe@example.com");
         employee.setAddress("123 Main Street");
         employee.setContactNumber("+1-555-555-5555");
-        employee.setLeaveBalance(10);
+
         employee.setDateOfBirth(new Date());
         employee.setEmploymentStartDate(new Date());
         employee.setEmploymentEndDate(null);
@@ -186,7 +186,7 @@ public class EmployeeServiceImpTest {
         employee.setEmail("john.doe@example.com");
         employee.setAddress("123 Main Street");
         employee.setContactNumber("+1-555-555-5555");
-        employee.setLeaveBalance(10);
+
         employee.setDateOfBirth(new Date());
         employee.setEmploymentStartDate(new Date());
         employee.setEmploymentEndDate(null);
@@ -234,7 +234,7 @@ public class EmployeeServiceImpTest {
         mockEmployee.setEmail("john.smith@example.com");
         mockEmployee.setAddress("123 Main St");
         mockEmployee.setContactNumber("555-555-1234");
-        mockEmployee.setLeaveBalance(10);
+
         mockEmployee.setDateOfBirth(new Date(1990, 1, 1));
         mockEmployee.setEmploymentStartDate(new Date(2021, 1, 1));
         mockEmployee.setEmploymentEndDate(new Date(2022, 1, 1));
