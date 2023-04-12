@@ -32,4 +32,5 @@ public class TOMConstants {
     public static final String EMPLOYEE_FTL = "employeeRegister.ftl";
     public static final String LEAVE_FTL = "leaveApprovalTemplate.ftl";
     public static final String LEAVE_SUBMIT_FTL = "leaveSubmitTemplate.ftl";
+
 }

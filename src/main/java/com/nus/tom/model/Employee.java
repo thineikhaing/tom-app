@@ -41,8 +41,6 @@ public class Employee extends AuditableEntity implements Serializable {
 
     private String contactNumber;
 
-    private float leaveBalance;
-
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dateOfBirth;
 
@@ -57,8 +55,10 @@ public class Employee extends AuditableEntity implements Serializable {
     private Project project;
 
     @OneToMany(mappedBy = "employee", fetch= FetchType.LAZY)
-
     private Set<Leave> leaves;
+
+    @OneToMany(mappedBy = "employee", fetch= FetchType.LAZY)
+    private Set<LeaveBalance> leaveBalances;
 
     @Size(max = 50)
     @Email
