@@ -11,6 +11,7 @@ import com.nus.tom.service.EmailBuilder;
 import com.nus.tom.service.impl.EmailSender;
 import com.nus.tom.service.impl.EmailService;
 import com.nus.tom.service.impl.EmployeeServiceImpl;
+import com.nus.tom.service.impl.LeaveUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,13 +52,16 @@ public class EmployeeServiceImpTest {
     @Mock
     private ResponseHelper responseHelper;
 
+    @Mock
+    private LeaveUtil leaveUtil;
+
     @InjectMocks
     private EmployeeServiceImpl employeeService;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        employeeService = new EmployeeServiceImpl(employeeRepository, departmentRepository ,responseHelper,  userRepository, roleRepository, encoder, emailService);
+        employeeService = new EmployeeServiceImpl(employeeRepository, departmentRepository ,responseHelper,  userRepository, roleRepository, encoder, emailService,leaveUtil);
     }
 
     @Test

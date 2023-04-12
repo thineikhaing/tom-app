@@ -1,14 +1,18 @@
 package com.nus.tom.service.impl;
 
+import com.nus.tom.model.Employee;
 import com.nus.tom.model.Leave;
+import com.nus.tom.model.LeaveBalance;
 import com.nus.tom.model.enums.LeaveStatus;
 import com.nus.tom.model.enums.LeaveType;
+import com.nus.tom.repository.LeaveBalanceRepository;
 import com.nus.tom.repository.LeaveRepository;
 import com.nus.tom.util.LeaveConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,6 +27,8 @@ import java.util.Optional;
 public class LeaveUtil {
 
     private final LeaveRepository leaveRepository;
+
+    private final LeaveBalanceRepository leaveBalanceRepository;
 
     private final LeaveConfig leaveConfig;
 
@@ -59,6 +65,23 @@ public class LeaveUtil {
             return leaveConfig.getMapping().get(LeaveType.CC.name().toLowerCase());
         }
         return 0;
+
+
+    }
+
+    /**
+     * insert all the eligible leaves once employee is saved
+     * @param employee
+     */
+    public void insertEligibleLeave(Employee employee) {
+
+
+        leaveConfig.getMapping().forEach((k, v) -> {
+            String leaveType = Arrays.stream(LeaveType.values()).filter(f->f.name().equalsIgnoreCase(k)).findFirst().get().value;
+            LeaveBalance leaveBalance = LeaveBalance.builder().leaveBalance(v).leaveType(leaveType).employee(employee).build();
+            leaveBalanceRepository.save(leaveBalance);
+
+        });
 
 
     }

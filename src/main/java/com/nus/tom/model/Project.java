@@ -18,6 +18,7 @@ import java.util.Set;
 public class Project extends AuditableEntity implements Serializable {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     private String id;
 
     @Column(name = "name")

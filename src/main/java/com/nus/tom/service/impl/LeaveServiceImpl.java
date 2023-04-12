@@ -4,10 +4,10 @@ import com.nus.tom.model.Employee;
 import com.nus.tom.model.Leave;
 import com.nus.tom.model.ResponseValueObject;
 import com.nus.tom.model.enums.LeaveStatus;
-import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.repository.LeaveBalanceRepository;
 import com.nus.tom.repository.LeaveRepository;
+import com.nus.tom.repository.ProjectRepository;
 import com.nus.tom.service.LeaveService;
 import com.nus.tom.util.JsonHandler;
 import com.nus.tom.util.ResponseHelper;
@@ -32,8 +32,6 @@ import java.util.Objects;
 public class LeaveServiceImpl implements LeaveService {
     private final LeaveRepository leaveRepository;
     private final EmployeeRepository employeeRepository;
-
-    private final DepartmentRepository departmentRepository;
     private final ResponseHelper responseHelper;
     private final JsonHandler jsonHandler;
     private final LeaveBalanceRepository leaveBalanceRepository;
@@ -43,6 +41,8 @@ public class LeaveServiceImpl implements LeaveService {
     private final EventManager eventManager;
 
     private final LeaveBalanceEventListener leaveBalanceEventListener;
+
+    private final ProjectRepository projectRepository;
 
     @PostConstruct
     public void init() {
