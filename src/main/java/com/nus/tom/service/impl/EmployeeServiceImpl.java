@@ -80,6 +80,11 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new ResourceNotFoundException("Employee", "id", id);
         }
     }
+    @Override
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee", "email", email));
+    }
 
     @Override
     public Employee createEmployee(Employee employee) {
@@ -87,22 +92,29 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
         employee.setDepartment(department);
 
+        User existingUser = userRepository.findByEmail(employee.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
 
-        User user = new User();
-        user.setUsername(employee.getFullName().replaceAll(" ", "_").toLowerCase());
-        user.setEmail(employee.getEmail());
-        user.setPassword(encoder.encode("password"));
+        if (existingUser != null) {
+            employee.setUser(existingUser);
+        }
+        else{
+            User user = new User();
+            user.setUsername(employee.getFullName().replaceAll(" ", "_").toLowerCase());
+            user.setEmail(employee.getEmail());
+            user.setPassword(encoder.encode("password"));
 
-        Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        roles.add(userRole);
-        user.setRoles(roles);
-        User newUser = userRepository.save(user);
-        employee.setUser(newUser);
+            Set<Role> roles = new HashSet<>();
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+            user.setRoles(roles);
+            User newUser = userRepository.save(user);
+            employee.setUser(newUser);
+            log.info("Employee's user account: {}", newUser.getUsername());
+        }
 
-        log.info("Employee's department: {}", department.getName());
-        log.info("Employee's user account: {}", newUser.getUsername());
+        log.info("Employee's department: {}",department.getName());
         log.info("Employee account: {}", employee.getEmail());
 
         invokeEmail(employee);
