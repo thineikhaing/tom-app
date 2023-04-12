@@ -11,7 +11,6 @@ import com.nus.tom.util.LeaveConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +27,9 @@ public class LeaveUtil {
 
     private final LeaveRepository leaveRepository;
 
+
     private final LeaveBalanceRepository leaveBalanceRepository;
+
 
     private final LeaveConfig leaveConfig;
 
@@ -85,4 +86,5 @@ public class LeaveUtil {
 
 
     }
+
 }
