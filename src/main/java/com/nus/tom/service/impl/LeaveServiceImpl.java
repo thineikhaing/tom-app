@@ -2,7 +2,6 @@ package com.nus.tom.service.impl;
 
 import com.nus.tom.model.Employee;
 import com.nus.tom.model.Leave;
-import com.nus.tom.model.LeaveBalance;
 import com.nus.tom.model.ResponseValueObject;
 import com.nus.tom.model.enums.LeaveStatus;
 import com.nus.tom.repository.DepartmentRepository;
@@ -22,7 +21,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -75,8 +77,8 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public ResponseEntity< List<Map<String,Object>>> getLeaveBalance(String employeeId) {
-        List<Map<String,Object>> leaveBalances = leaveBalanceRepository.findByEmployeeId(employeeId);
+    public ResponseEntity<List<Map<String, Object>>> getLeaveBalance(String employeeId) {
+        List<Map<String, Object>> leaveBalances = leaveBalanceRepository.findByEmployeeId(employeeId);
         if (leaveBalances.isEmpty())
             leaveBalances = new ArrayList<>();
         return new ResponseEntity<>(leaveBalances, HttpStatus.OK);
@@ -108,6 +110,18 @@ public class LeaveServiceImpl implements LeaveService {
             return responseHelper.setResponseEntity(TOMConstants.ERROR, TOMConstants.EMPTY_STRING, payload);
         }
 
+    }
+
+    /**
+     * @param employeeId
+     * @return leave requests
+     */
+    @Override
+    public ResponseEntity<List<Map<String, Object>>> getLeaveRequests(String employeeId) {
+        List<Map<String, Object>> leaves = leaveRepository.findByEmployeeId(employeeId);
+        if (leaves.isEmpty())
+            leaves = new ArrayList<>();
+        return new ResponseEntity<>(leaves, HttpStatus.OK);
     }
 
     /**
