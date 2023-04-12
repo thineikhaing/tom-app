@@ -38,4 +38,10 @@ public class Leave extends AuditableEntity implements Serializable {
     @JoinColumn(name = "employeeId")
     private Employee employee;
 
+    @Column(name = "comment")
+    private String comment;
+
+    @Column(name = "reason")
+    private String reason;
+
 }
