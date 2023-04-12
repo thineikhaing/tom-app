@@ -14,7 +14,7 @@ public interface LeaveService {
     ResponseEntity<ResponseValueObject> save(String leave);
 
 
-    ResponseEntity< List<Map<String,Object>>> getLeaveBalance(String employeeId);
+    ResponseEntity<List<Map<String, Object>>> getLeaveBalance(String employeeId);
 
     ResponseEntity<ResponseValueObject> updateLeaveStatus(String leave);
 
