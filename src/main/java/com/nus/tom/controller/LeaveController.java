@@ -36,5 +36,10 @@ public class LeaveController {
         return leaveService.updateLeaveStatus(leave);
     }
 
+    @GetMapping(path = "/getLeaveRequest/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Map<String, Object>>> getLeaveRequest(@PathVariable String employeeId) {
+        return leaveService.getLeaveRequests(employeeId);
+    }
+
 
 }
