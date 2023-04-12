@@ -19,3 +19,4 @@
 | /api/employees/id                       | DELETE |                                                                                                                    | Delete an Employee          |
 | /api/employees/department/id            | GET    |                                                                                                                    | Get Employees by Department |
 | /api/departments/assign-department-head | POST   | employeeId, departmentId                                                                                           | Assign Department Head      |
+| /api/tom/leave/applyLeave               | POST   | leaveType, employeeId, startDate, endDate                                                                          | Save Leave Request          |
