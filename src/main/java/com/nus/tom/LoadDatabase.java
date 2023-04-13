@@ -1,9 +1,11 @@
 package com.nus.tom;
 
 import com.nus.tom.model.Department;
+import com.nus.tom.model.LeaveBalance;
 import com.nus.tom.model.Role;
 import com.nus.tom.model.enums.ERole;
 import com.nus.tom.repository.DepartmentRepository;
+import com.nus.tom.repository.LeaveBalanceRepository;
 import com.nus.tom.repository.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(RoleRepository roleRepository, DepartmentRepository departmentRepository) {
         return args -> {
+
 //            log.info("Preloading " + roleRepository.save(new Role(ERole.ROLE_USER)));
 //            log.info("Preloading " + roleRepository.save(new Role(ERole.ROLE_ADMIN)));
 //            log.info("Preloading " + roleRepository.save(new Role(ERole.ROLE_MANAGER)));
