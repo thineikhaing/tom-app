@@ -22,7 +22,7 @@ public class LeaveBalance extends AuditableEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     private String id;
 
-    @ManyToOne
+    @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "employeeId")
     private Employee employee;
     @Column(name = "leaveBalance")

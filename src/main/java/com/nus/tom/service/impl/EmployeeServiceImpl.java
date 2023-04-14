@@ -116,10 +116,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.info("Employee account: {}", employee.getEmail());
 
         invokeEmail(employee);
-        Employee newEmployee = employeeRepository.save(employee);
-        leaveUtil.insertEligibleLeave(newEmployee);
+        Employee newemployee = employeeRepository.save(employee);
+        leaveUtil.insertEligibleLeave(newemployee);
 
-        return newEmployee;
+        return newemployee;
     }
 
     @Override
