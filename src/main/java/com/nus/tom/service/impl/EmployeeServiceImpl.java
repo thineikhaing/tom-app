@@ -91,12 +91,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         Department department = departmentRepository.findById(employee.getDepartment().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
         employee.setDepartment(department);
+        Optional<User> existingUser = userRepository.findByEmail(employee.getEmail());
 
-        User existingUser = userRepository.findByEmail(employee.getEmail())
-                .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
-
-        if (existingUser != null) {
-            employee.setUser(existingUser);
+        if (existingUser.isPresent()) {
+            employee.setUser(existingUser.get());
         }
         else{
             User user = new User();
@@ -118,10 +116,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.info("Employee account: {}", employee.getEmail());
 
         invokeEmail(employee);
+        Employee newEmployee = employeeRepository.save(employee);
+        leaveUtil.insertEligibleLeave(newEmployee);
 
-        leaveUtil.insertEligibleLeave(employee);
-
-        return employeeRepository.save(employee);
+        return newEmployee;
     }
 
     @Override
