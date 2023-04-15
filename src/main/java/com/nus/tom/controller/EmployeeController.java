@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @Slf4j
 @RequestMapping("api/employees")
@@ -68,6 +68,13 @@ public class EmployeeController {
         EmployeeDTO employeeResponse = EmployeeDTO.fromEmployee(employee);
         return ResponseEntity.ok().body(employeeResponse);
 
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<EmployeeDTO> getEmployeeByEmail(@PathVariable String email) {
+        Employee employee = employeeService.getEmployeeByEmail(email);
+        EmployeeDTO employeeDTO = EmployeeDTO.fromEmployee(employee);
+        return ResponseEntity.ok().body(employeeDTO);
     }
 
     // Update

@@ -4,6 +4,7 @@ import com.nus.tom.model.Employee;
 import com.nus.tom.model.Leave;
 import com.nus.tom.model.ResponseValueObject;
 import com.nus.tom.model.enums.LeaveStatus;
+import com.nus.tom.repository.DepartmentRepository;
 import com.nus.tom.repository.EmployeeRepository;
 import com.nus.tom.repository.LeaveBalanceRepository;
 import com.nus.tom.repository.LeaveRepository;
@@ -44,6 +45,7 @@ public class LeaveServiceImpl implements LeaveService {
 
     private final ProjectRepository projectRepository;
 
+
     @PostConstruct
     public void init() {
         eventManager.bindListenerToPublisher(leaveBalanceEventListener);
@@ -77,6 +79,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
+
     public ResponseEntity<List<Map<String, Object>>> getLeaveBalance(String employeeId) {
         List<Map<String, Object>> leaveBalances = leaveBalanceRepository.findByEmployeeId(employeeId);
         if (leaveBalances.isEmpty())

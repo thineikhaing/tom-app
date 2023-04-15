@@ -80,36 +80,46 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new ResourceNotFoundException("Employee", "id", id);
         }
     }
+    @Override
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee", "email", email));
+    }
 
     @Override
     public Employee createEmployee(Employee employee) {
         Department department = departmentRepository.findById(employee.getDepartment().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
         employee.setDepartment(department);
+        Optional<User> existingUser = userRepository.findByEmail(employee.getEmail());
 
+        if (existingUser.isPresent()) {
+            employee.setUser(existingUser.get());
+        }
+        else{
+            User user = new User();
+            user.setUsername(employee.getFullName().replaceAll(" ", "_").toLowerCase());
+            user.setEmail(employee.getEmail());
+            user.setPassword(encoder.encode("password"));
 
-        User user = new User();
-        user.setUsername(employee.getFullName().replaceAll(" ", "_").toLowerCase());
-        user.setEmail(employee.getEmail());
-        user.setPassword(encoder.encode("password"));
+            Set<Role> roles = new HashSet<>();
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+            user.setRoles(roles);
+            User newUser = userRepository.save(user);
+            employee.setUser(newUser);
+            log.info("Employee's user account: {}", newUser.getUsername());
+        }
 
-        Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        roles.add(userRole);
-        user.setRoles(roles);
-        User newUser = userRepository.save(user);
-        employee.setUser(newUser);
-
-        log.info("Employee's department: {}", department.getName());
-        log.info("Employee's user account: {}", newUser.getUsername());
+        log.info("Employee's department: {}",department.getName());
         log.info("Employee account: {}", employee.getEmail());
 
         invokeEmail(employee);
+        Employee newEmployee = employeeRepository.save(employee);
+        leaveUtil.insertEligibleLeave(newEmployee);
 
-        leaveUtil.insertEligibleLeave(employee);
-
-        return employeeRepository.save(employee);
+        return newEmployee;
     }
 
     @Override
