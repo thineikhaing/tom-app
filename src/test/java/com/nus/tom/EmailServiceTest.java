@@ -27,8 +27,8 @@ public class EmailServiceTest {
 
     @BeforeEach
     void init() {
-        ReflectionTestUtils.setField(emailService,"emailSender","test");
-        ReflectionTestUtils.setField(emailService,"activateUrl","test");
+//        ReflectionTestUtils.setField(emailService,"emailSender","test");
+//        ReflectionTestUtils.setField(emailService,"activateUrl","test");
     }
 
     @Test

@@ -124,8 +124,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updateEmployee(String id, Employee employee) {
-        Employee existingEmployee = employeeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id));
+        Employee existingEmployee =  getEmployeeById(id);
 
         Department department = departmentRepository.findById(employee.getDepartment().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", employee.getDepartment().getId()));
