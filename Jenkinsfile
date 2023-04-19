@@ -7,7 +7,7 @@ try{
         // for display purposes
         // Get some code from a GitHub repository
         git url: 'https://thineikhaing@bitbucket.org/time-off-management/api.git',
-            credentialsId: 'thineikhaing',
+//             credentialsId: 'thineikhaing',
             branch: 'thin_develop'
      }
     stage('Build docker') {
