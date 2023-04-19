@@ -20,7 +20,7 @@ class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(RoleRepository roleRepository, DepartmentRepository departmentRepository) {
         return args -> {
-//
+
 //            log.info("Preloading " + roleRepository.save(new Role(ERole.ROLE_USER)));
 //            log.info("Preloading " + roleRepository.save(new Role(ERole.ROLE_ADMIN)));
 //            log.info("Preloading " + roleRepository.save(new Role(ERole.ROLE_MANAGER)));

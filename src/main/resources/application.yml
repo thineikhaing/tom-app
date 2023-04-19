@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: sit
+    active: staging
 ---
 spring:
   mail:
@@ -130,6 +130,14 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
+  #front end using Thymeleaf
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+  application:
+    name: "TOM"
 # Logger configuration
 logging:
   pattern:
